@@ -18,57 +18,64 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity {
+    //This class integrates Firebase Authentication service and signs up a user
 
-    private FirebaseAuth auth;
-    private EditText signupEmail, signupPassword;
-    private Button signupButton;
+    private FirebaseAuth mAuth;
+    private EditText emailSignUpID, passwordSignupID;
+    private Button signupBtnFromSignupLayout;
     private TextView loginRedirectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_layout);
 
-        auth = FirebaseAuth.getInstance();
-        signupEmail = findViewById(R.id.signup_email);
-        signupPassword = findViewById(R.id.signup_password);
-        signupButton = findViewById(R.id.signup_button);
-        loginRedirectText = findViewById(R.id.loginRedirectText);
+        mAuth = FirebaseAuth.getInstance();
+        emailSignUpID = findViewById(R.id.emailSignUpID);
+        passwordSignupID = findViewById(R.id.passwordSignupID);
+        signupBtnFromSignupLayout = findViewById(R.id.signupBtnFromSignupLayout);
+        loginRedirectText = findViewById(R.id.loginRedirectTextFromSignupLayout);
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        signupBtnFromSignupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user = signupEmail.getText().toString().trim();
-                String pass = signupPassword.getText().toString().trim();
+                String user = emailSignUpID.getText().toString().trim();
+                String pass = passwordSignupID.getText().toString().trim();
 
                 if (user.isEmpty()){
-                    signupEmail.setError("Email cannot be empty");
+                    emailSignUpID.setError("Please provide an email address to continue registration!");
                 }
+
                 if (pass.isEmpty()){
-                    signupPassword.setError("Password cannot be empty");
+                    passwordSignupID.setError("Please provide a password to continue registration! ");
                 } else{
-                    auth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    //Firebase integration to create a user
+
+                    mAuth.createUserWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignupActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignupActivity.this, SplashActivity.class));
+
                             } else {
                                 Toast.makeText(SignupActivity.this, "SignUp Failed" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }
-
             }
-        });
+        });//end of setOnClickListener() function for the signup button
 
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SignupActivity.this, SplashActivity.class));
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             }
-        });
+        });//end of setOnClickListener() function for the login redirect button
 
-    }
-}
+    }//end of onCreate() function
+
+}//end of SignupActivity{} class

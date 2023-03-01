@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    //This class directs the user to the signup page based on the type of user
     private Button doctorBtn;
     private Button patientBtn;
 
@@ -21,13 +22,16 @@ public class MainActivity extends AppCompatActivity {
         patientBtn = findViewById(R.id.patientBtnID);
 
         doctorBtn.setOnClickListener(new View.OnClickListener() {
+            //When click on the Doctor button, the user will be directed to the SignupActivity screen
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
+
         patientBtn.setOnClickListener(new View.OnClickListener() {
+            //When click on the Patient button, the user will be directed to the SignupActivity screen
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SignupActivity.class);
@@ -36,9 +40,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-    }
-
-
-}
+    }//end of onCreate() function
+}//end of MainActivity{} class
