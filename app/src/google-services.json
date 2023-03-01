@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "314242372474",
+    "project_id": "flex-4b734",
+    "storage_bucket": "flex-4b734.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314242372474:android:10ee81511b5ac7cb6bfcc3",
+        "android_client_info": {
+          "package_name": "com.example.coen_elec_390_project_winter_2023"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "314242372474-akjp834vjevpl4lo3ki32cqq9uv1kuv5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.coen_elec_390_project_winter_2023",
+            "certificate_hash": "8daee0c450c36f4d419913436dc5263df4e48c3f"
+          }
+        },
+        {
+          "client_id": "314242372474-kbd1k8hejobptau8t2u045e6e9a0rpvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwDGM8YPp2xz8-zGzQXzjOKtPBewMidfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "314242372474-kbd1k8hejobptau8t2u045e6e9a0rpvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
