@@ -46,6 +46,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (user.isEmpty()){
                     emailSignUpID.setError("Please provide an email address to continue registration!");
                 }
+                //
 
                 if (pass.isEmpty()){
                     passwordSignupID.setError("Please provide a password to continue registration! ");
