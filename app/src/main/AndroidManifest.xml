@@ -29,62 +29,57 @@
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".MainActivity">
+            android:parentActivityName=".SplashActivity"
+            android:name=".Login.DoctorLoginActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".SignupActivity">
-        </activity>
-
-        <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Login.LoginOptionsActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Login.LoginActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Login.PatientLoginActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".SignUp.PatientSignUpActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".SignUp.SignUpOptionsActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".SignUp.DoctorSignUpActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Dashboard.BluetoothConnectionActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Dashboard.DoctorDashboardActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Dashboard.ListOfPatientsActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SplashActivity"
             android:name=".Dashboard.PatientDashboardActivity">
         </activity>
 

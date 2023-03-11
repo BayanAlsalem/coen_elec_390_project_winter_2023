@@ -13,11 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Dashboard.BluetoothConnectionActivity;
 import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
-import com.example.coen_elec_390_project_winter_2023.MainActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Patient;
 import com.example.coen_elec_390_project_winter_2023.R;
-import com.example.coen_elec_390_project_winter_2023.SignupActivity;
-import com.example.coen_elec_390_project_winter_2023.SplashActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
