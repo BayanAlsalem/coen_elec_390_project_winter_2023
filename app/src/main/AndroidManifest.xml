@@ -29,15 +29,19 @@
         </activity>
 
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".MainActivity">
         </activity>
 
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".SignupActivity">
         </activity>
 
         <activity
-            android:name=".LoginActivity">
+            android:parentActivityName=".MainActivity"
+            android:name=".Login.LoginOptionsActivity">
+
         </activity>
 
     </application>

@@ -1,11 +1,7 @@
-package com.example.coen_elec_390_project_winter_2023;
+package com.example.coen_elec_390_project_winter_2023.Login;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -13,14 +9,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboardActivity;
+import com.example.coen_elec_390_project_winter_2023.R;
+import com.example.coen_elec_390_project_winter_2023.SignUp.PatientSignUpActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-
 public class LoginActivity extends AppCompatActivity {
-
     private FirebaseAuth mAuth;
     private EditText loginEmail, loginPassword;
     private TextView signupRedirectText;
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
                                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(LoginActivity.this, SplashActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
                                         finish();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -76,10 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         signupRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                startActivity(new Intent(LoginActivity.this, PatientSignUpActivity.class));
             }
         });
 
 
     }//end of onCreate() function
-}//end of LoginActivity{} class
+}
