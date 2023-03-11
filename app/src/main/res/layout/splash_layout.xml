@@ -11,22 +11,22 @@
 
     <TextView
         android:id="@+id/sloganID"
-        android:layout_width="339dp"
+        android:layout_width="311dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="50dp"
+        android:layout_marginRight="15dp"
         android:gravity="center_horizontal"
         android:text="Track, Treat and Triumph with"
-        android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/flexLogoID"
-        android:layout_width="333dp"
-        android:layout_height="304dp"
+        android:layout_width="248dp"
+        android:layout_height="221dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
