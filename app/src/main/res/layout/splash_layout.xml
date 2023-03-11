@@ -9,27 +9,41 @@
     android:background="#5CE1E6"
     android:layout_gravity="center">
 
-    <ImageView
-        android:id="@+id/flexLogoID"
-        android:layout_width="167dp"
-        android:layout_height="93dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="180dp"
-        android:background="@drawable/flex_connected_logo" />
-
     <TextView
-        android:id="@+id/flexTextID"
-        android:layout_width="wrap_content"
+        android:id="@+id/sloganID"
+        android:layout_width="339dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
-        android:text="FLEX"
-        android:textSize="100dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:text="Track, Treat and Triumph with"
+        android:textStyle="bold"
         android:textColor="@color/white"
-        android:fontFamily="sans-serif-condensed-light"
+        android:textSize="30dp" />
 
-        />
+    <ImageView
+        android:id="@+id/flexLogoID"
+        android:layout_width="333dp"
+        android:layout_height="304dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/flex_logo_transparent" />
 
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Your Partner for Neurogenic Muscle Therapy"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
     <Button
         android:id="@+id/loginBtn"
         android:text="Login"

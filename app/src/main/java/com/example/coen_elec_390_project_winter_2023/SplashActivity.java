@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
+import com.example.coen_elec_390_project_winter_2023.SignUp.SignUpOptionsActivity;
+
 public class SplashActivity extends AppCompatActivity{
     //This class directs the user to either the signup or the login pages
 
@@ -26,7 +29,7 @@ public class SplashActivity extends AppCompatActivity{
             //When click on the Signup button, the user will be directed to the SignupActivity screen
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, SignUpOptionsActivity.class);
                 startActivity(intent);
             }
         });
@@ -35,7 +38,7 @@ public class SplashActivity extends AppCompatActivity{
             //When click on the login button, the user will be directed to the loginActivity screen
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginOptionsActivity.class);
                 startActivity(intent);
             }
         });
