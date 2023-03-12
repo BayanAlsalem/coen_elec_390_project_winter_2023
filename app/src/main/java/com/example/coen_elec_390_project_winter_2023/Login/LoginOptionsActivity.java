@@ -27,7 +27,7 @@ public class LoginOptionsActivity extends AppCompatActivity {
             //When click on the Doctor button, the user will be directed to the LoginActivity screen
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginOptionsActivity.this, LoginActivity.class);
+                Intent intent = new Intent(LoginOptionsActivity.this, DoctorLoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -36,7 +36,7 @@ public class LoginOptionsActivity extends AppCompatActivity {
             //When click on the Patient button, the user will be directed to the LoginActivity screen
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginOptionsActivity.this, LoginActivity.class);
+                Intent intent = new Intent(LoginOptionsActivity.this, PatientLoginActivity.class);
                 startActivity(intent);
             }
         });

@@ -7,8 +7,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
-import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 public class SignUpOptionsActivity extends AppCompatActivity {

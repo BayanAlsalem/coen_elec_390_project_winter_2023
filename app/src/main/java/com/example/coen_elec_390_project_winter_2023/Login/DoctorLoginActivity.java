@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.R;
+import com.example.coen_elec_390_project_winter_2023.SignUp.DoctorSignUpActivity;
 import com.example.coen_elec_390_project_winter_2023.SignUp.PatientSignUpActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,38 +28,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class PatientLoginActivity extends AppCompatActivity {
+public class DoctorLoginActivity extends AppCompatActivity {
 
     //This class will be here until we figure out how to direct
     // the user to its assigned dashboard from one LoginActivity
 
     private FirebaseAuth mAuth;
-    private EditText patientLoginEmail, patientLoginPassword;
-    private TextView patientSignupRedirectText;
-    private Button patientLoginButton;
+    private EditText doctorLoginEmail, doctorLoginPassword;
+    private TextView doctorSignupRedirectText;
+    private Button doctorLoginButton;
     private DatabaseReference mDatabase;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.patient_login_layout);
+        setContentView(R.layout.doctor_login_layout);
 
-        patientLoginEmail = findViewById(R.id.patient_login_email);
-        patientLoginPassword = findViewById(R.id.patient_login_password);
-        patientLoginButton = findViewById(R.id.patient_login_button);
-        patientSignupRedirectText = findViewById(R.id.patientSignUpRedirectText);
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child("Patients");
-
+        doctorLoginEmail = findViewById(R.id.doctor_login_email);
+        doctorLoginPassword = findViewById(R.id.doctor_login_password);
+        doctorLoginButton = findViewById(R.id.doctor_login_button);
+        doctorSignupRedirectText = findViewById(R.id.doctorSignUpRedirectText);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child("Doctors");
 
-        patientLoginButton.setOnClickListener(new View.OnClickListener() {
+        doctorLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String email = patientLoginEmail.getText().toString();
-                String pass = patientLoginPassword.getText().toString();
+                String email = doctorLoginEmail.getText().toString();
+                String pass = doctorLoginPassword.getText().toString();
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if (!pass.isEmpty()) {
@@ -72,11 +71,11 @@ public class PatientLoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 if (dataSnapshot.exists()) {
-                                                    Toast.makeText(PatientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(PatientLoginActivity.this, PatientDashboardActivity.class));
+                                                    Toast.makeText(DoctorLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(DoctorLoginActivity.this, DoctorDashboardActivity.class));
                                                     finish();
                                                 } else {
-                                                    Toast.makeText(PatientLoginActivity.this, "You are not a patient", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(DoctorLoginActivity.this, "You are not a doctor", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                             @Override
@@ -88,24 +87,24 @@ public class PatientLoginActivity extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(PatientLoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DoctorLoginActivity.this, "Account does not exist", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {
-                        patientLoginPassword.setError("Please provide your password");
+                        doctorLoginPassword.setError("Please provide your password");
                     }
                 } else if (email.isEmpty()) {
-                    patientLoginEmail.setError("Please provide your email address");
+                    doctorLoginEmail.setError("Please provide your email address");
                 } else {
-                    patientLoginEmail.setError("Please enter a valid email");
+                    doctorLoginEmail.setError("Please enter a valid email");
                 }
             }
         });
 
-        patientSignupRedirectText.setOnClickListener(new View.OnClickListener() {
+        doctorSignupRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PatientLoginActivity.this, PatientSignUpActivity.class));
+                startActivity(new Intent(DoctorLoginActivity.this, DoctorSignUpActivity.class));
             }
         });
 

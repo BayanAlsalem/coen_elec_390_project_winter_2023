@@ -1,4 +1,4 @@
-package com.example.coen_elec_390_project_winter_2023;
+package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
+import com.example.coen_elec_390_project_winter_2023.R;
 import com.example.coen_elec_390_project_winter_2023.SignUp.SignUpOptionsActivity;
 
 public class SplashActivity extends AppCompatActivity{

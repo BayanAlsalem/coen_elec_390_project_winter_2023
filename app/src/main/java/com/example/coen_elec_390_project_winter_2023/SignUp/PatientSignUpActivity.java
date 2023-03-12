@@ -12,23 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Dashboard.BluetoothConnectionActivity;
-import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
-import com.example.coen_elec_390_project_winter_2023.MainActivity;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
+import com.example.coen_elec_390_project_winter_2023.Models.Patient;
 import com.example.coen_elec_390_project_winter_2023.R;
-import com.example.coen_elec_390_project_winter_2023.SignupActivity;
-import com.example.coen_elec_390_project_winter_2023.SplashActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class PatientSignUpActivity extends AppCompatActivity {
     //This class integrates Firebase Authentication service and signs up a user
 
     private FirebaseAuth mAuth;
-    private EditText patientEmailSignUp, patientPasswordSignup;
+    private EditText patientEmailSignUp, patientPasswordSignup, patientFullName;
     private Button signupBtnFromPatientSignupLayout;
     private TextView patientLoginRedirectText;
+    private DatabaseReference mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +39,19 @@ public class PatientSignUpActivity extends AppCompatActivity {
         setContentView(R.layout.patient_signup_layout);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         patientEmailSignUp = findViewById(R.id.patientEmailSignUpID);
         patientPasswordSignup = findViewById(R.id.patientPasswordSignupID);
         signupBtnFromPatientSignupLayout = findViewById(R.id.signupBtnFromPatientSignupLayout);
         patientLoginRedirectText = findViewById(R.id.loginRedirectTextFromPatientSignupLayout);
+        patientFullName = findViewById(R.id.patientFullNameID);
 
         signupBtnFromPatientSignupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user = patientEmailSignUp.getText().toString().trim();
                 String pass = patientPasswordSignup.getText().toString().trim();
+                String name = patientFullName.getText().toString().trim();
 
                 if (user.isEmpty()){
                     patientEmailSignUp.setError("Please provide an email address to continue registration!");
@@ -63,6 +68,10 @@ public class PatientSignUpActivity extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
                                 Toast.makeText(PatientSignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
+                                // Create a new patient object and store it in the database
+                                Patient patient = new Patient(name, user, pass, mAuth.getUid());
+                                // Save user to database under Users/Patients
+                                mDatabase.child("Users").child("Patients").child(mAuth.getUid()).setValue(patient);
                                 startActivity(new Intent(PatientSignUpActivity.this, BluetoothConnectionActivity.class));
 
                             } else {
@@ -77,7 +86,7 @@ public class PatientSignUpActivity extends AppCompatActivity {
         patientLoginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PatientSignUpActivity.this, LoginActivity.class));
+                startActivity(new Intent(PatientSignUpActivity.this, LoginOptionsActivity.class));
             }
         });//end of setOnClickListener() function for the login redirect button
 
