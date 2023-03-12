@@ -21,6 +21,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class DoctorLoginActivity extends AppCompatActivity {
 
@@ -31,6 +37,7 @@ public class DoctorLoginActivity extends AppCompatActivity {
     private EditText doctorLoginEmail, doctorLoginPassword;
     private TextView doctorSignupRedirectText;
     private Button doctorLoginButton;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -44,6 +51,7 @@ public class DoctorLoginActivity extends AppCompatActivity {
         doctorSignupRedirectText = findViewById(R.id.doctorSignUpRedirectText);
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child("Doctors");
 
         doctorLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,14 +65,29 @@ public class DoctorLoginActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        Toast.makeText(DoctorLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(DoctorLoginActivity.this, DoctorDashboardActivity.class));
-                                        finish();
+                                        Query query = mDatabase.orderByChild("uid").equalTo(mAuth.getCurrentUser().getUid());
+
+                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+                                                    Toast.makeText(DoctorLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(DoctorLoginActivity.this, DoctorDashboardActivity.class));
+                                                    finish();
+                                                } else {
+                                                    Toast.makeText(DoctorLoginActivity.this, "You are not a doctor", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                // Handle errors here
+                                            }
+                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(DoctorLoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DoctorLoginActivity.this, "Account does not exist", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     } else {

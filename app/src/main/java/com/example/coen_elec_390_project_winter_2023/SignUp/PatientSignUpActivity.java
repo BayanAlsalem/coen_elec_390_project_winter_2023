@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Dashboard.BluetoothConnectionActivity;
-import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Patient;
 import com.example.coen_elec_390_project_winter_2023.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,7 +86,7 @@ public class PatientSignUpActivity extends AppCompatActivity {
         patientLoginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(PatientSignUpActivity.this, LoginActivity.class));
+                startActivity(new Intent(PatientSignUpActivity.this, LoginOptionsActivity.class));
             }
         });//end of setOnClickListener() function for the login redirect button
 

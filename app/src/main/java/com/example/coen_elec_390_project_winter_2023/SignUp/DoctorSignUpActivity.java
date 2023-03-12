@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.coen_elec_390_project_winter_2023.Dashboard.BluetoothConnectionActivity;
+
 import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboardActivity;
-import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Doctor;
 import com.example.coen_elec_390_project_winter_2023.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,7 +86,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
         doctorLoginRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DoctorSignUpActivity.this, LoginActivity.class));
+                startActivity(new Intent(DoctorSignUpActivity.this, LoginOptionsActivity.class));
             }
         });//end of setOnClickListener() function for the login redirect button
 

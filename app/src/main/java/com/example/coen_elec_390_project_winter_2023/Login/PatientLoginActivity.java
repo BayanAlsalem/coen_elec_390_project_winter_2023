@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.R;
 import com.example.coen_elec_390_project_winter_2023.SignUp.PatientSignUpActivity;
@@ -19,6 +20,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class PatientLoginActivity extends AppCompatActivity {
 
@@ -29,6 +36,7 @@ public class PatientLoginActivity extends AppCompatActivity {
     private EditText patientLoginEmail, patientLoginPassword;
     private TextView patientSignupRedirectText;
     private Button patientLoginButton;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -40,6 +48,8 @@ public class PatientLoginActivity extends AppCompatActivity {
         patientLoginPassword = findViewById(R.id.patient_login_password);
         patientLoginButton = findViewById(R.id.patient_login_button);
         patientSignupRedirectText = findViewById(R.id.patientSignUpRedirectText);
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child("Patients");
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -56,9 +66,24 @@ public class PatientLoginActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        Toast.makeText(PatientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(PatientLoginActivity.this, PatientDashboardActivity.class));
-                                        finish();
+                                        Query query = mDatabase.orderByChild("uid").equalTo(mAuth.getCurrentUser().getUid());
+
+                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+                                                    Toast.makeText(PatientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(PatientLoginActivity.this, PatientDashboardActivity.class));
+                                                    finish();
+                                                } else {
+                                                    Toast.makeText(PatientLoginActivity.this, "You are not a patient", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                // Handle errors here
+                                            }
+                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
