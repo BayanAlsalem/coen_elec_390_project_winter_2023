@@ -5,6 +5,7 @@ public class Patient {
     public String email;
     public String password;
     public String uid;
+    public String doctorID;
 
     public Patient() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -48,5 +49,9 @@ public class Patient {
     public void setUID(String uid) {
         this.uid = uid;
     }
+
+    public String getDoctorID() { return doctorID;}
+
+    public void setDoctorID(String doctorID) { this.doctorID = doctorID;}
 }
 

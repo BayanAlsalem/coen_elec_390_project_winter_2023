@@ -35,9 +35,6 @@ public class ListOfPatientsActivity extends AppCompatActivity{
 
         patientListView = findViewById(R.id.patientListViewID);
 
-        // For every patient in the database, add their name to the list
-
-        // For each row, display the patient's name
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Users").child("Patients").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -58,13 +55,6 @@ public class ListOfPatientsActivity extends AppCompatActivity{
                 }
             }
         });
-
-
-        // create adapter
-        // set adapter to listview
-        // print to console the arraylist
-
-
         }
 
 }//end of ListOfPatientsActivity{} class
