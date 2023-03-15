@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coen_elec_390_project_winter_2023"
-        tools:targetApi="33">
+        tools:targetApi="33"
+        tools:replace="android:label">
 
 
         <activity
@@ -30,17 +31,7 @@
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Login.DoctorLoginActivity">
-        </activity>
-
-        <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Login.LoginOptionsActivity">
-        </activity>
-
-        <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Login.PatientLoginActivity">
+            android:name=".Login.LoginActivity">
         </activity>
 
         <activity
@@ -64,12 +55,10 @@
         </activity>
 
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.DoctorDashboardActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.ListOfPatientsActivity">
         </activity>
 

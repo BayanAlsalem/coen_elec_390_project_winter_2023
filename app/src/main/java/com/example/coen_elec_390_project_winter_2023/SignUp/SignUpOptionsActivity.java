@@ -29,6 +29,7 @@ public class SignUpOptionsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpOptionsActivity.this, DoctorSignUpActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -38,6 +39,7 @@ public class SignUpOptionsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpOptionsActivity.this, PatientSignUpActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
