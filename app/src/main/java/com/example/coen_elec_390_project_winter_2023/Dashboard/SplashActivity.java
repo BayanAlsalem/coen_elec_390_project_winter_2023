@@ -4,17 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coen_elec_390_project_winter_2023.Login.LoginOptionsActivity;
+import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.R;
 import com.example.coen_elec_390_project_winter_2023.SignUp.SignUpOptionsActivity;
 
 public class SplashActivity extends AppCompatActivity{
     //This class directs the user to either the signup or the login pages
-
+    FirebaseHelper firebaseHelper = new FirebaseHelper();
     private Button loginBtn;
     private Button signupBtn;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(firebaseHelper.isLoggedIn()){
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +45,7 @@ public class SplashActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent intent = new Intent(SplashActivity.this, SignUpOptionsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -39,12 +53,11 @@ public class SplashActivity extends AppCompatActivity{
             //When click on the login button, the user will be directed to the loginActivity screen
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SplashActivity.this, LoginOptionsActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
-
-
 
     }//end of onCreate() function
 

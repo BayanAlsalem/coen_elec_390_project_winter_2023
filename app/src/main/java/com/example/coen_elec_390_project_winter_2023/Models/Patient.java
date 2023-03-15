@@ -1,12 +1,6 @@
 package com.example.coen_elec_390_project_winter_2023.Models;
 
-public class Patient {
-    public String name;
-    public String email;
-    public String password;
-    public String uid;
-    public String doctorID;
-
+public class Patient extends User {
     public Patient() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
@@ -16,42 +10,7 @@ public class Patient {
         this.email = email;
         this.password = password;
         this.uid = uid;
+        this.type = userOptions.userType.PATIENT;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUID(String uid) {
-        this.uid = uid;
-    }
-
-    public String getDoctorID() { return doctorID;}
-
-    public void setDoctorID(String doctorID) { this.doctorID = doctorID;}
 }
 
