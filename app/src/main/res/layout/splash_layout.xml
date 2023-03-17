@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/flexLogoID"
-        android:layout_width="248dp"
-        android:layout_height="221dp"
+        android:layout_width="207dp"
+        android:layout_height="186dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
@@ -68,6 +68,19 @@
         android:layout_gravity="center"
         android:backgroundTint="@color/black"
         app:cornerRadius = "20dp"/>
+
+    <TextView
+        android:id="@+id/privacy_policy_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:clickable="true"
+        android:onClick="openPrivacyActivity"
+        android:text="By using the app, you accept the FLEX Terms of Use. Please also read the FLEX Privacy Policy." />
 
 
 </LinearLayout>
