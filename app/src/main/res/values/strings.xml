@@ -1,3 +1,37 @@
 <resources>
-    <string name="app_name">coen_elec_390_project_winter_2023</string>
+    <string name="app_name">FLEX APP</string>
+    <string name="privacy_policy_content">By using the FLEX Android App, you agree to the following terms and conditions:
+
+Data Handling:
+
+FLEX collects and stores user data solely for the purpose of providing services and improving user experience.
+
+User data is protected by secure encryption and stored on a secure server.
+
+FLEX does not sell or share user data with any third parties.
+
+
+Terms of Use:
+
+The FLEX Android App is provided "as is" and is intended for use as an EMG therapy log to monitor patient\'s progress across their treatment of the Neurogenic disease.
+
+Users of the FLEX Android App are solely responsible for the accuracy and completeness of the data they provide.
+
+FLEX is not responsible for any consequences that may arise from the use of the app.
+
+
+Privacy Policy:
+
+FLEX respects user privacy and is committed to protecting user data.
+
+FLEX collects user data solely for the purpose of providing services and improving user experience.
+
+FLEX does not sell or share user data with any third parties.
+
+FLEX may use user data for research purposes but will always anonymize the data before using it for research.
+
+Users can request to access, modify or delete their data by contacting FLEX support.
+
+By using the FLEX Android App, you agree to the above terms and conditions.
+</string>
 </resources>

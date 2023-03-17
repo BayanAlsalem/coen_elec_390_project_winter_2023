@@ -59,8 +59,13 @@ public class SplashActivity extends AppCompatActivity{
             }
         });
 
+
     }//end of onCreate() function
 
+    public void openPrivacyActivity(View view) {
+        Intent intent = new Intent(SplashActivity.this, PrivacyActivity.class);
+        startActivity(intent);
+    }
 }//end of SplashActivity{} class
 
 
