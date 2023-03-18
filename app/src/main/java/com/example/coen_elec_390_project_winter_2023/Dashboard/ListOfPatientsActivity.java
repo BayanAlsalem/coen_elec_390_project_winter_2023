@@ -41,7 +41,10 @@ public class ListOfPatientsActivity extends AppCompatActivity{
                         String userId = document.getId(); // get the user ID
                         String userType = document.getString("userType"); // get the value of the "userType" key
                         Log.d("firebase", "The user type for user " + userId + " is: " + userType);
-                        patientList.add(document.getString("name").toString());
+                        // if user is a patient, add their name to the patientList
+                        if (userType.equals("PATIENT")) {
+                            patientList.add(document.getString("name").toString());
+                        }
                     }
 
                     System.out.println(patientList);
