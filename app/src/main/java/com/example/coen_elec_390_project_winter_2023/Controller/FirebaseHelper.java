@@ -1,24 +1,40 @@
 package com.example.coen_elec_390_project_winter_2023.Controller;
 
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboardActivity;
+import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboardActivity;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Doctor;
 import com.example.coen_elec_390_project_winter_2023.Models.Patient;
+import com.example.coen_elec_390_project_winter_2023.Models.Reading;
 import com.example.coen_elec_390_project_winter_2023.Models.User;
+import com.example.coen_elec_390_project_winter_2023.Models.userOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FirebaseHelper {
     private static final String DB_USERS_COLLECTION = "users";
+    private static final String DB_READINGS_COLLECTION= "readings";
 
     public interface voidCallbackInterface {
         void onSuccess();
@@ -28,6 +44,18 @@ public class FirebaseHelper {
 
     public interface getUserCallbackInterface {
         void onSuccess(User user);
+
+        void onFail(Exception e);
+    }
+
+    public interface getReadingsListCallbackInterface {
+        void onSuccess(List<Reading> readingsList);
+
+        void onFail(Exception e);
+    }
+
+    public interface getReadingsCallbackInterface {
+        void onSuccess(List<Integer> readings);
 
         void onFail(Exception e);
     }
@@ -133,4 +161,82 @@ public class FirebaseHelper {
                     }
                 });
     }
+
+    public void createReading(List<Integer> flexedList,List<Integer> relaxedList, voidCallbackInterface callback, String userID){
+
+        Log.d("Readings","Creating Reading");
+        getCurrentUser(new getUserCallbackInterface() {
+            @Override
+            public void onSuccess(User user) {
+                Log.d("Readings","Creating Reading: Get current user succeeded");
+                if (user.getUserType() == userOptions.userType.PATIENT){
+                    if(user.getUid().equals(userID)){
+                        Log.d("Readings","Creating Reading: User confirmed");
+                        Reading reading= new Reading(userID,flexedList,relaxedList,new Timestamp(System.currentTimeMillis()));
+                        db().collection(DB_USERS_COLLECTION).document(user.getUid()).collection(DB_READINGS_COLLECTION).add(reading).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d("Readings", "DocumentSnapshot written with ID: " + documentReference.getId());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("Readings", "Error adding document", e);
+                                    }
+                                });
+                        System.out.println("TEST SUCCESSSSS a bit!!!!!");
+                    }
+
+                } else if (user.getUserType() == userOptions.userType.DOCTOR){
+                    //To Do: we need to pass user object to either dashboards (eg: putExtra)
+
+                }
+            }
+            @Override
+            public void onFail(Exception e) {
+
+            }
+        });
+    }
+
+    public List<Reading> getReadings(String userID, getReadingsListCallbackInterface callback){
+        List<Reading> readingsList= new ArrayList<>();
+        getCurrentUser(new getUserCallbackInterface() {
+            public void onSuccess(User user) {
+                if (user.getUserType() == userOptions.userType.PATIENT) {
+
+                    {
+                        if (user.getUid().equals(userID)) {
+                            db().collection(DB_USERS_COLLECTION).document(user.getUid()).collection(DB_READINGS_COLLECTION).get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    Log.d("Readings", document.getId() + " => " + document.getData());
+                                                    Reading temp = document.toObject(Reading.class);
+                                                    Log.d("Readings","TEMP VARIABLE"+temp.toString());
+                                                    readingsList.add(temp);
+                                                }
+                                                callback.onSuccess(readingsList);
+                                            } else {
+                                                Log.d("Readings", "Error getting documents: ", task.getException());
+                                                callback.onFail(task.getException());
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFail(Exception e) {
+                Log.d("Readings","GETING READINGS FAILED");
+            }
+        });
+        Log.d("Readings","ReadingsList: "+readingsList.toString());
+        return readingsList;
+    }
+
+
 }

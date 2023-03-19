@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,10 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coen_elec_390_project_winter_2023"
-        tools:targetApi="33"
-        tools:replace="android:label">
+        tools:replace="android:label"
+        tools:targetApi="33">
 
-
+        <activity
+            android:name=".Dashboard.BluetoothReadingsActivity"
+            android:exported="false"
+            android:parentActivityName=".Dashboard.SplashActivity"/>
         <activity
             android:name=".Dashboard.SplashActivity"
             android:exported="true">
@@ -28,54 +35,33 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Login.LoginActivity">
-        </activity>
-
+            android:name=".Login.LoginActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".SignUp.PatientSignUpActivity">
-        </activity>
-
+            android:name=".SignUp.PatientSignUpActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".SignUp.SignUpOptionsActivity">
-        </activity>
-
+            android:name=".SignUp.SignUpOptionsActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".SignUp.DoctorSignUpActivity">
-        </activity>
-
+            android:name=".SignUp.DoctorSignUpActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.BluetoothConnectionActivity">
-        </activity>
-
+            android:name=".Dashboard.BluetoothConnectionActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.DoctorDashboardActivity">
-        </activity>
-
+            android:name=".Dashboard.DoctorDashboardActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.ListOfPatientsActivity">
-        </activity>
-
+            android:name=".Dashboard.ListOfPatientsActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.PatientDashboardActivity">
-        </activity>
-
+            android:name=".Dashboard.PatientDashboardActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.PrivacyActivity">
-        </activity>
-
-
-
+            android:name=".Dashboard.PrivacyActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
     </application>
 
 </manifest>

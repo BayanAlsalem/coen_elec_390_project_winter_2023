@@ -10,10 +10,30 @@
     android:background="#5CE1E6"
     tools:context="Dashboard.PatientDashboardActivity">
 
+    <TextView
+        android:id="@+id/dashboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="User Dashboard"/>
+    <TextView
+        android:id="@+id/user_name_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"/>
+
+
+    <com.anychart.anychart.AnyChartView
+        android:id="@+id/any_chart_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
+        android:layout_weight="1"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
@@ -28,22 +48,23 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to the FLEX Patient Dashboard"
+                android:text="Extra Features to be Added"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
 
 
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <com.anychart.anychart.AnyChartView
-    android:id="@+id/any_chart_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
+    <Button
+        android:id="@+id/take_reading_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Reading"/>
+
+
 
 </LinearLayout>
