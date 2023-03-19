@@ -103,6 +103,7 @@
             android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
 
+        <activity
             android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.PrivacyActivity">
         </activity>
