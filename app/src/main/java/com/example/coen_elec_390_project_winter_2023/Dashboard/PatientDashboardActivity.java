@@ -31,6 +31,7 @@ import java.util.List;
 
 public class PatientDashboardActivity extends AppCompatActivity {
 
+    Button Start_Reading;
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     @Override
@@ -43,6 +44,15 @@ public class PatientDashboardActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
 
+
+        Start_Reading = findViewById(R.id.btn_StartReading);
+        Start_Reading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PatientDashboardActivity.this, PatientInstructionsActivity.class);
+                startActivity(intent);
+            }
+        });
         //To Do: Handle logged in user...
 
         //To Do: Dynamically populate chart...
