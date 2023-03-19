@@ -1,9 +1,13 @@
 package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +58,22 @@ public class ListOfPatientsActivity extends AppCompatActivity{
                 } else {
                     Log.d("firebase", "Error getting user documents: " + task.getException());
                 }
+            }
+        });
+
+        // onclick listener for each patient in the list
+        // when clicked, it will open the patient's profile
+        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(ListOfPatientsActivity.this, "You clicked on " + patientList.get(i), Toast.LENGTH_SHORT).show();
+                // intent to open patient's profile and send the patient's name through intent
+                Intent intent = new Intent(ListOfPatientsActivity.this, PatientProfileActivity.class);
+                intent.putExtra("patientName", patientList.get(i));
+                startActivity(intent);
+
+
+
             }
         });
 
