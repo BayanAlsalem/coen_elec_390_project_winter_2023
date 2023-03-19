@@ -55,10 +55,12 @@
         </activity>
 
         <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.DoctorDashboardActivity">
         </activity>
 
         <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.ListOfPatientsActivity">
         </activity>
 
@@ -68,6 +70,7 @@
         </activity>
 
         <activity
+
             android:name=".Dashboard.PatientInstructionsActivity"
             android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
@@ -99,6 +102,14 @@
             android:name=".Dashboard.PatientContractTest"
             android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
+
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.PrivacyActivity">
+        </activity>
+
+
+
+
     </application>
 
 </manifest>
