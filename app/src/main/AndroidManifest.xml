@@ -108,6 +108,11 @@
             android:name=".Dashboard.PrivacyActivity">
         </activity>
 
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.PatientProfileActivity">
+        </activity>
+
 
 
 
