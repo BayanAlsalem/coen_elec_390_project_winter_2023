@@ -37,6 +37,7 @@
                 android:id="@+id/patientNameID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text=""
                 android:textSize="22sp"
                 android:textAlignment="center"
