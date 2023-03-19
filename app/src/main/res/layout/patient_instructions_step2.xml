@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
 
-    android:id="@+id/step1Layout"
+    android:id="@+id/step2Layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +11,7 @@
     android:orientation="vertical"
     android:gravity="top"
     android:background="#5CE1E6"
-    tools:context="Dashboard.PatientInstructionsStep1">
+    tools:context="Dashboard.PatientInstructionsStep2">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -30,19 +31,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="30dp"
-                android:text="1. Make Yourself Comfortable"
+                android:text="2. Clean the Skin"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:paddingTop="30dp"/>
-
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="332dp"
-                android:layout_height="200dp"
-                android:src="@drawable/step_sit" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,6 +45,11 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="262dp"
+                    app:srcCompat="@drawable/clean_step" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
                     android:layout_gravity="center"
                     android:textAlignment="center"
                     android:paddingTop="20dp"
-                    android:text="Sit or lay down depending on which muscle you're performing the test. "
+                    android:text="Using a sanitizing wipe, clean the skin where the electrodes will be placed "
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -72,7 +71,7 @@
                 android:padding="30dp">
 
                 <Button
-                    android:id="@+id/btn_back1"
+                    android:id="@+id/btn_back2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,7 +79,7 @@
                     android:text="Back" />
 
                 <Button
-                    android:id="@+id/btn_next1"
+                    android:id="@+id/btn_next2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

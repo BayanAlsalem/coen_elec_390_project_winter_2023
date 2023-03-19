@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
 
-    android:id="@+id/step1Layout"
+<LinearLayout
+    android:id="@+id/step3Layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:gravity="top"
     android:background="#5CE1E6"
-    tools:context="Dashboard.PatientInstructionsStep1">
+    tools:context="Dashboard.PatientInstructionsStep3">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -29,36 +29,49 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="30dp"
-                android:text="1. Make Yourself Comfortable"
+                android:paddingBottom="50dp"
+                android:text="3. Electrodes Setup"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:paddingTop="30dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="161dp"
+                android:layout_gravity="top|center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="332dp"
-                android:layout_height="200dp"
-                android:src="@drawable/step_sit" />
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="145dp"
+                    android:layout_height="162dp"
+                    app:srcCompat="@drawable/surface_electrode_icon" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="122dp"
+                    android:layout_height="164dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/surface_electrode_attatchment_icon" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
+                android:layout_height="160dp"
+                android:layout_gravity="bottom"
                 android:orientation="vertical"
-                android:padding="10dp">
-
+                android:paddingTop="50dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="Place the surface pad into the attatchment that is connected to a cable "
                     android:textAlignment="center"
-                    android:paddingTop="20dp"
-                    android:text="Sit or lay down depending on which muscle you're performing the test. "
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -68,31 +81,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:orientation="horizontal"
-                android:padding="30dp">
+                android:paddingTop="35dp">
 
                 <Button
-                    android:id="@+id/btn_back1"
+                    android:id="@+id/btn_back3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
                     android:backgroundTint="@color/black"
                     android:text="Back" />
 
                 <Button
-                    android:id="@+id/btn_next1"
+                    android:id="@+id/btn_next3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="90dp"
                     android:backgroundTint="@color/black"
                     android:text="Next " />
-
             </LinearLayout>
 
-
         </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>
+

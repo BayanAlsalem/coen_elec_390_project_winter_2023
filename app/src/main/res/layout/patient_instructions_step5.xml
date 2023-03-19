@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 
-    android:id="@+id/step1Layout"
+    android:id="@+id/step4Layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:gravity="top"
     android:background="#5CE1E6"
-    tools:context="Dashboard.PatientInstructionsStep1">
+    tools:context=".Dashboard.PatientInstructionsStep5">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -20,47 +20,50 @@
         app:cardElevation="20dp">
 
         <LinearLayout
-            android:layout_width="365dp"
-            android:layout_height="629dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="30dp"
-                android:text="1. Make Yourself Comfortable"
+                android:text="5.Plug the cable in the module"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@android:color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:paddingTop="30dp"/>
 
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="332dp"
-                android:layout_height="200dp"
-                android:src="@drawable/step_sit" />
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:layout_width="307dp"
+                android:layout_height="336dp"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="292dp"
+                    android:layout_height="278dp"
+                    app:srcCompat="@drawable/apply_electrodes" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="When you're ready,"
                     android:textAlignment="center"
-                    android:paddingTop="20dp"
-                    android:text="Sit or lay down depending on which muscle you're performing the test. "
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="press Next to start the EMG Test."
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
 
             </LinearLayout>
 
@@ -72,7 +75,7 @@
                 android:padding="30dp">
 
                 <Button
-                    android:id="@+id/btn_back1"
+                    android:id="@+id/btn_back5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,11 +83,11 @@
                     android:text="Back" />
 
                 <Button
-                    android:id="@+id/btn_next1"
+                    android:id="@+id/btn_next5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="90dp"
+                    android:layout_marginStart="60dp"
                     android:backgroundTint="@color/black"
                     android:text="Next " />
 
