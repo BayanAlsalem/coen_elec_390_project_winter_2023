@@ -12,11 +12,17 @@ public class PatientInstructionsActivity extends AppCompatActivity{
     private Button nextButton0, nextButton1, nextButton2, nextButton3, nextButton4;
     private Button backButton0, backButton1, backButton2, backButton3, backButton4;
 
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_instructions_list);
-
+        if (getIntent().getExtras() != null) {
+            userID=getIntent().getStringExtra("userID");
+        }else{
+            System.out.println("Intent Failed");
+            return;
+        }
            nextButton0 = findViewById(R.id.btn_next0);
            backButton0 = findViewById(R.id.btn_back0);
 
@@ -24,6 +30,7 @@ public class PatientInstructionsActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PatientInstructionsActivity.this, PatientInstructionsStep1.class);
+                intent.putExtra("userID",userID);
                 startActivity(intent);
             }
            });
@@ -32,6 +39,7 @@ public class PatientInstructionsActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PatientInstructionsActivity.this, PatientDashboardActivity.class);
+                intent.putExtra("userID",userID);
                 startActivity(intent);
             }
         });

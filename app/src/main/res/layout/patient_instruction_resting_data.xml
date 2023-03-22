@@ -21,8 +21,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:gravity="center"
             android:padding="24dp">
 
             <TextView
@@ -39,7 +40,8 @@
             <LinearLayout
                 android:layout_width="307dp"
                 android:layout_height="279dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/text_view_rest"
@@ -47,29 +49,17 @@
                     android:layout_height="wrap_content"
                     android:text="Rest Your Muscle..."
                     android:textAlignment="center"
+
                     android:textColor="@android:color/black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/text_view_countdown"
+                <ProgressBar
+                    android:id="@+id/determinateBarRest"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="201dp"
-                    android:paddingTop="30dp"
-                    android:text="30"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="100sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="102dp"
-                    android:text="Seconds"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:progress="25"/>
 
 
             </LinearLayout>

@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
@@ -45,6 +48,8 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
     String userID;
     Button readingButton;
 
+    ProgressBar progressBar;
+
     List<Integer> readings = new ArrayList<>();
 
     static final UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -62,7 +67,7 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_readings);
         readingButton = (Button) findViewById(R.id.readingButton);
-
+        progressBar = findViewById(R.id.determinateBar);
         if(attemptToConnect()){
 
         }else{
@@ -102,7 +107,7 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
                                 @Override
                                 public void onFail(Exception e) {
                                 }
-                            });
+                            }, progressBar);
 
                         }
                     }else{
@@ -200,7 +205,7 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
         return false;
     }
 
-    public List<Integer> startReading(FirebaseHelper.getReadingsCallbackInterface callback) throws IOException, InterruptedException {
+    public List<Integer> startReading(FirebaseHelper.getReadingsCallbackInterface callback, ProgressBar progressBarF) throws IOException, InterruptedException {
         List<Integer> readings = new ArrayList<>();
         String resultString="";
         int externalCounter = 0;
@@ -219,6 +224,7 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
                 boolean endMarker = false;
                 String message="";
                 if(inStream.available()>0){
+
                     bytes = inStream.read(buffer);
                     String readMessage = new String(buffer, 0, bytes);
                     System.out.println(readMessage);
@@ -237,6 +243,13 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
                             String readMessage = new String(buffer, 0, bytes);
                             System.out.println(readMessage);
                             message = readMessage;
+                            int progress=readingsCounter/2;
+                            // Put your UI update code here
+
+                            progressBarF.setProgress(0);
+                            progressBarF.setMax(progress);
+                            progressBarF.setProgress(progress);
+
 
                             System.out.println("Message is: " + message);
                             if (message.equals("end")) {
@@ -290,6 +303,8 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
             return false;
         }
     }
+
+
 
 }
 // old code

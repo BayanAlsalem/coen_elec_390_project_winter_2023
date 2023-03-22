@@ -70,7 +70,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
         readingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(PatientDashboardActivity.this, BluetoothConnectionActivity.class);
+                Intent intent= new Intent(PatientDashboardActivity.this, PatientInstructionsActivity.class);
                 intent.putExtra("userID",userID);
                 startActivity(intent);
             }

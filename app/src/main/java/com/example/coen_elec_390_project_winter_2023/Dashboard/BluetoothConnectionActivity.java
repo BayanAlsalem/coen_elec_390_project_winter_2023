@@ -104,7 +104,7 @@ public class BluetoothConnectionActivity extends AppCompatActivity {
                     Toast.makeText(BluetoothConnectionActivity.this, "Selected Device: " + selectedDevice.getName(), Toast.LENGTH_LONG).show();
 
                     if(attemptToConnect()) {
-                        Intent intent = new Intent(BluetoothConnectionActivity.this, BluetoothReadingsActivity.class);
+                        Intent intent = new Intent(BluetoothConnectionActivity.this, PatientRestTest.class);
                         intent.putExtra("userID",userID);
                         intent.putExtra("BTdevice", selectedDevice);
                         startActivity(intent);
