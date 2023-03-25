@@ -1,9 +1,13 @@
 package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.R;
@@ -33,6 +38,8 @@ public class PatientContractTest extends BluetoothReadingsActivity{
     private boolean mTimerRunning;
     private long timeLeft = START_TIME_IN_SECONDS;
     String userID;
+
+    List<Integer> flexedReading;
 
 
     boolean ready= false;
@@ -81,61 +88,43 @@ public class PatientContractTest extends BluetoothReadingsActivity{
                 }.start();
                 mTimerRunning = true;*/
                 Start_Flex.setVisibility(View.INVISIBLE);
-                System.out.println("Reading Button Pressed");
+                if (ActivityCompat.checkSelfPermission(PatientContractTest.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 try {
-
-                    if(btSocket.isConnected()) {
-                        if (startSignal()) {
-                            readings = startReading( new FirebaseHelper.getReadingsCallbackInterface() {
-                                @Override
-                                public void onSuccess(List<Integer> readingsResult) {
-                                    Toast.makeText(PatientContractTest.this, readingsResult.toString(), Toast.LENGTH_SHORT).show();
-                                    readings=readingsResult;
-                                    if(readings.size()!=0){
-                                        Log.d("ReadingsFinal",readings.toString());
-                                        Log.d("ReadingsFinal",userID);
-                                        firebaseHelper.createReading(readings,restReadings,  new FirebaseHelper.voidCallbackInterface() {
-                                            @Override
-                                            public void onSuccess() {
-                                                Toast.makeText(PatientContractTest.this, "Readings Created Successfully", Toast.LENGTH_SHORT).show();
-                                            }
-                                            @Override
-                                            public void onFail(Exception e) {
-                                                Toast.makeText(PatientContractTest.this, "Reading Creation Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }, userID);
-                                        ready=true;
-                                        Redo2.setVisibility(View.VISIBLE);
-                                        end_test.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                                @Override
-                                public void onFail(Exception e) {
-                                }
-                            },progressBar);
-
-                        }
-                    }else{
-                        System.out.println("Socket is Not Connected");
-                    }
-
-
-                } catch (
-                        IOException e) {
-                    throw new RuntimeException(e);
-                } catch (
-                        InterruptedException e) {
+                    btSocket.close();
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }
+                if(attemptToConnect()) {
+                    System.out.println("CONNECTED FUCKKERS");
+                    try {
+                        btSocket.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    startBluetoothTask();
 
+                }
+
+                System.out.println("Reading Button Pressed");
+
+
+            }
         });
 
         end_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(ready) {
-                    Intent intent = new Intent(PatientContractTest.this, PatientDashboardActivity.class);
+                    Intent intent = new Intent(PatientContractTest.this, SplashActivity.class);
                     intent.putExtra("userID", userID);
                     startActivity(intent);
                 }
@@ -166,6 +155,40 @@ public class PatientContractTest extends BluetoothReadingsActivity{
 
         CountdownContract.setText(timeLeftFormatted);
     }*/
+private void startBluetoothTask() {
+    // Assuming you have the Bluetooth device address
+    String deviceAddress = selectedDevice.getAddress(); // Replace with the actual Bluetooth device address
+
+    BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
+
+        @Override
+        public void onReadingsReceived(List<Integer> readings) {
+            // Process the readings received from the Bluetooth device
+            if(readings!=null) {
+                Log.d("MainActivity", "Readings: " + readings.toString());
+                flexedReading=readings;
+                if(readings.size()!=0) {
+                    firebaseHelper.createReading(readings,restReadings,  new FirebaseHelper.voidCallbackInterface() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(PatientContractTest.this, "Readings Created Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onFail(Exception e) {
+                            Toast.makeText(PatientContractTest.this, "Reading Creation Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }, userID);
+                    ready=true;
+                    end_test.setVisibility(View.VISIBLE);
+                }else{
+                    ready=false;
+                    Start_Flex.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    });
+    bluetoothAsyncTask.execute();
+}
 
     public List<Integer> startReading(FirebaseHelper.getReadingsCallbackInterface callback, ProgressBar progressBarF) throws IOException, InterruptedException {
         List<Integer> readings = new ArrayList<>();

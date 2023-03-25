@@ -2,6 +2,7 @@ package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,12 +42,17 @@ public class PatientDashboardActivity extends AppCompatActivity {
     List<Reading> listTest = new ArrayList<Reading>();
 
     String userID;
+    String userEmail;
+
+    Cartesian line = AnyChart.line();
+    AnyChartView anyChartView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_dashboard_layout);
+        anyChartView = findViewById(R.id.any_chart_view);
 
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras == null) {
             return;
         }
@@ -54,10 +60,24 @@ public class PatientDashboardActivity extends AppCompatActivity {
         String userEmail = extras.getString("userEmail");
         if (userEmail != null) {
         System.out.println(userEmail);
+        }else{
+            System.out.println("USER EMAIL IS NULLL");
         }
         userID = extras.getString("userID");
         if (userID != null) {
             System.out.println(userID);
+            System.out.println("USER ID IS NOT NULLL");
+        }*/
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                userEmail = extras.getString("userEmail");
+                userID = extras.getString("userID");
+            }
+        } else {
+            userEmail = savedInstanceState.getString("userEmail");
+            userID = savedInstanceState.getString("userID");
         }
 
         ActionBar actionBar = getSupportActionBar();
@@ -76,38 +96,34 @@ public class PatientDashboardActivity extends AppCompatActivity {
             }
         });
 
-        //To Do: Handle logged in user...
-
-
-
-        //To Do: Dynamically populate chart...
-
-
-
-
-
-        /*for(int i=0;i<100;i++){
-            listTest.add(i);
-        }*/
-        /*firebaseHelper.createReading(listTest,listTest,  new FirebaseHelper.voidCallbackInterface() {
-            @Override
-            public void onSuccess() {
-                Toast.makeText(PatientDashboardActivity.this, "Readings Created Successfully", Toast.LENGTH_SHORT).show();
-               ;
-            }
-            @Override
-            public void onFail(Exception e) {
-                Toast.makeText(PatientDashboardActivity.this, "Reading Creation Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }, userID);*/
-
-
         updateGraph();
 
     }//end of onCreate() function
 
+    protected void onPause() {
+        super.onPause();
+        //updateGraph();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("userEmail", userEmail);
+        outState.putString("userID", userID);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        userEmail = savedInstanceState.getString("userEmail");
+        userID = savedInstanceState.getString("userID");
+    }
+
     protected void onResume() {
         super.onResume();
+
+        System.out.println("OnResume...");
+        userID = firebaseHelper.getCurrentUserId();
         updateGraph();
     }
 
@@ -140,8 +156,14 @@ public class PatientDashboardActivity extends AppCompatActivity {
 
         return data;
     }
-
     public void updateGraph(){
+
+
+        anyChartView.setChart(line);
+
+        System.out.println("Update Graph..");
+        System.out.println(userID);
+
         listTest= firebaseHelper.getReadings(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
             public void onSuccess(List<Reading> readingsList) {
@@ -154,12 +176,14 @@ public class PatientDashboardActivity extends AppCompatActivity {
                     }
                 });
 
+                Log.d("Readings","ReadingsList: "+readingsList.get(0).toString());
+
                 if(listTest.size()!=0) {
                     data=listToEntry(listTest.get(0).getFlexedValues());
                 }
-                Cartesian line = AnyChart.line();
+
+                line = AnyChart.line();
                 line.setData(data);
-                AnyChartView anyChartView = (AnyChartView) findViewById(R.id.any_chart_view);
                 anyChartView.setChart(line);
             }
 

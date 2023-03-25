@@ -95,6 +95,9 @@ public class FirebaseHelper {
         return auth().getCurrentUser() != null;
     }
 
+    public String getCurrentUserId(){
+        return isLoggedIn() ? auth().getCurrentUser().getUid() : null;
+    }
     public void getCurrentUser(getUserCallbackInterface callback) {
         if (auth().getCurrentUser() == null) {
             callback.onFail(new Exception("User is not logged in."));
@@ -213,9 +216,9 @@ public class FirebaseHelper {
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                                    Log.d("Readings", document.getId() + " => " + document.getData());
+                                                    //Log.d("Readings", document.getId() + " => " + document.getData());
                                                     Reading temp = document.toObject(Reading.class);
-                                                    Log.d("Readings","TEMP VARIABLE"+temp.toString());
+                                                    //Log.d("Readings","TEMP VARIABLE"+temp.toString());
                                                     readingsList.add(temp);
                                                 }
                                                 callback.onSuccess(readingsList);
@@ -234,7 +237,7 @@ public class FirebaseHelper {
                 Log.d("Readings","GETING READINGS FAILED");
             }
         });
-        Log.d("Readings","ReadingsList: "+readingsList.toString());
+        //Log.d("Readings","ReadingsList: "+readingsList.toString());
         return readingsList;
     }
 

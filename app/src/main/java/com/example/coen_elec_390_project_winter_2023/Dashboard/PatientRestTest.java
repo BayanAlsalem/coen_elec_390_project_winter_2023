@@ -1,15 +1,22 @@
 package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.R;
@@ -28,6 +35,8 @@ public class PatientRestTest extends BluetoothReadingsActivity {
     private boolean mTimerRunning;
     private long timeLeft = START_TIME_IN_SECONDS;
     String userID;
+
+    List<Integer> restReadings;
 
 
     boolean ready= false;
@@ -71,61 +80,36 @@ public class PatientRestTest extends BluetoothReadingsActivity {
         Start_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /*countDownTimer = new CountDownTimer(timeLeft, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        timeLeft = millisUntilFinished;
-                        updateCountDownText();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        mTimerRunning = false;
-
-
-                    }
-                }.start();
-                mTimerRunning = true;*/
-
                 Start_test.setVisibility(View.INVISIBLE);
-
-                System.out.println("Reading Button Pressed");
+                if (ActivityCompat.checkSelfPermission(PatientRestTest.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 try {
-
-                    if(btSocket.isConnected()) {
-                        if (startSignal()) {
-                            readings = startReading( new FirebaseHelper.getReadingsCallbackInterface() {
-                                @Override
-                                public void onSuccess(List<Integer> readingsResult) {
-                                    Toast.makeText(PatientRestTest.this, readingsResult.toString(), Toast.LENGTH_SHORT).show();
-                                    readings=readingsResult;
-                                    if(readings.size()!=0){
-                                        Log.d("ReadingsFinal",readings.toString());
-                                        Log.d("ReadingsFinal",userID);
-                                        ready=true;
-                                        Redo.setVisibility(View.VISIBLE);
-                                        next_test.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                                @Override
-                                public void onFail(Exception e) {
-                                }
-                            },progressBar);
-
-                        }
-                    }else{
-                        System.out.println("Socket is Not Connected");
-                    }
-
-
-                } catch (
-                        IOException e) {
-                    throw new RuntimeException(e);
-                } catch (
-                        InterruptedException e) {
+                    btSocket.close();
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                if(attemptToConnect()) {
+                    System.out.println("CONNECTED FUCKKERS");
+                    try {
+                        btSocket.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    startBluetoothTask();
+
+                }
+
+                System.out.println("Reading Button Pressed");
+
+
             }
 
         });
@@ -134,7 +118,7 @@ public class PatientRestTest extends BluetoothReadingsActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PatientRestTest.this, PatientContractTest.class);
-                intent.putIntegerArrayListExtra("restReadings", (ArrayList<Integer>) readings);
+                intent.putIntegerArrayListExtra("restReadings", (ArrayList<Integer>) restReadings);
                 intent.putExtra("userID", userID);
                 intent.putExtra("BTdevice", selectedDevice);
                 startActivity(intent);
@@ -152,6 +136,29 @@ public class PatientRestTest extends BluetoothReadingsActivity {
             }
         });
         //updateCountDownText();
+    }
+
+    private void startBluetoothTask() {
+        // Assuming you have the Bluetooth device address
+        String deviceAddress = selectedDevice.getAddress(); // Replace with the actual Bluetooth device address
+
+        BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
+
+            @Override
+            public void onReadingsReceived(List<Integer> readings) {
+                // Process the readings received from the Bluetooth device
+                if(readings!=null) {
+                    Log.d("MainActivity", "Readings: " + readings.toString());
+                    restReadings=readings;
+                    if(readings.size()!=0) {
+                        next_test.setVisibility(View.VISIBLE);
+                    }else{
+                        Start_test.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+        bluetoothAsyncTask.execute();
     }
 
 
