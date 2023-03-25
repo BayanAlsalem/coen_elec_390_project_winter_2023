@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -36,6 +32,21 @@
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Login.LoginActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.RequestAppointmentActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.DoctorDashboard">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.SplashActivity">
         </activity>
 
         <activity
@@ -108,8 +119,18 @@
         </activity>
 
         <activity
-            android:name=".Dashboard.PrivacyActivity"
-            android:parentActivityName=".Dashboard.SplashActivity"></activity>
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.PrivacyActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.PatientProfileActivity">
+        </activity>
+
+
+
+
     </application>
 
 </manifest>
