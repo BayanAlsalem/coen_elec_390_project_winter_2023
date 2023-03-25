@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,16 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coen_elec_390_project_winter_2023"
-        tools:targetApi="33"
-        tools:replace="android:label">
-
+        tools:replace="android:label"
+        tools:targetApi="33">
 
         <activity
-            android:name=".Dashboard.SplashActivity"
+            android:name=".Dashboard.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -30,13 +32,14 @@
         </activity>
 
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Login.LoginActivity">
+            android:name=".Dashboard.BluetoothConnectionActivity"
+            android:parentActivityName=".Dashboard.SplashActivity">
         </activity>
 
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.RequestAppointmentActivity">
+            android:name=".Dashboard.BluetoothReadingsActivity"
+            android:exported="false"
+            android:parentActivityName=".Dashboard.SplashActivity">
         </activity>
 
         <activity
@@ -46,8 +49,25 @@
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.SplashActivity">
+            android:name=".Dashboard.DoctorDashboardActivity">
         </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.DoctorProfileActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.ListOfPatientsActivity">
+        </activity>
+
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Login.LoginActivity">
+        </activity>
+
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
@@ -65,18 +85,13 @@
         </activity>
 
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.BluetoothConnectionActivity">
+            android:name=".Dashboard.PatientContractTest"
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.DoctorDashboardActivity">
-        </activity>
-
-        <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.ListOfPatientsActivity">
+            android:name=".Dashboard.PatientDashboard">
         </activity>
 
         <activity
@@ -85,37 +100,38 @@
         </activity>
 
         <activity
-
             android:name=".Dashboard.PatientInstructionsActivity"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
         <activity
             android:name=".Dashboard.PatientInstructionsStep1"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
         <activity
             android:name=".Dashboard.PatientInstructionsStep2"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
         <activity
             android:name=".Dashboard.PatientInstructionsStep3"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
         <activity
             android:name=".Dashboard.PatientInstructionsStep4"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
         <activity
             android:name=".Dashboard.PatientInstructionsStep5"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.PatientProfileActivity">
+        </activity>
+
         <activity
             android:name=".Dashboard.PatientRestTest"
-            android:parentActivityName=".Dashboard.SplashActivity" >
-        </activity>
-        <activity
-            android:name=".Dashboard.PatientContractTest"
-            android:parentActivityName=".Dashboard.SplashActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboardActivity" >
         </activity>
 
         <activity
@@ -125,9 +141,13 @@
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.PatientProfileActivity">
+            android:name=".Dashboard.RequestAppointmentActivity">
         </activity>
 
+        <activity
+            android:parentActivityName=".Dashboard.HomeActivity"
+            android:name=".Dashboard.SplashActivity">
+        </activity>
 
 
 

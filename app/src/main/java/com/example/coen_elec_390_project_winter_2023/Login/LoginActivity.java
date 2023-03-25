@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else if (user.getUserType() == userOptions.userType.DOCTOR){
                         //To Do: we need to pass user object to either dashboards (eg: putExtra)
-                        startActivity(new Intent(LoginActivity.this, DoctorDashboard.class));
+                        startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
                     }
                     finish();
                 }
