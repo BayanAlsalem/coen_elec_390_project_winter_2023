@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboard;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboardActivity;
+import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboard;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.User;
 import com.example.coen_elec_390_project_winter_2023.Models.userOptions;
@@ -36,13 +38,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "User detected, verifying data..", Toast.LENGTH_SHORT).show();
             firebaseHelper.getCurrentUser(new FirebaseHelper.getUserCallbackInterface() {
                 @Override
+
+                //I have to change the class to test the PatientDashboard
                 public void onSuccess(User user) {
                     if (user.getUserType() == userOptions.userType.PATIENT){
                         //To Do: we need to pass user object to either dashboards (eg: putExtra)
-                        startActivity(new Intent(LoginActivity.this, PatientDashboardActivity.class));
+                        startActivity(new Intent(LoginActivity.this, PatientDashboard.class));
                     } else if (user.getUserType() == userOptions.userType.DOCTOR){
                         //To Do: we need to pass user object to either dashboards (eg: putExtra)
-                        startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
+                        startActivity(new Intent(LoginActivity.this, DoctorDashboard.class));
                     }
                     finish();
                 }

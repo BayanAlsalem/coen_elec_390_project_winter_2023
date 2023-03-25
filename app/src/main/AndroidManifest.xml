@@ -16,11 +16,10 @@
 
 
         <activity
-            android:name=".Dashboard.SplashActivity"
+            android:name=".Dashboard.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -32,6 +31,21 @@
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Login.LoginActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.RequestAppointmentActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.DoctorDashboard">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.SplashActivity">
         </activity>
 
         <activity
@@ -111,6 +125,11 @@
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.PatientProfileActivity">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.PatientDashboard">
         </activity>
 
 

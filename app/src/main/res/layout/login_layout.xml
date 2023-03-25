@@ -8,65 +8,72 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#5CE1E6"
+
     tools:context=".Login.LoginActivity">
 
+    <ImageView
+        android:id="@+id/doctor1ID"
+        android:layout_width="292dp"
+        android:layout_height="292dp"
+        android:layout_gravity="center"
+        android:background="@drawable/doctor_2" />
+
+
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="316dp"
+        android:layout_height="366dp"
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_width="318dp"
+            android:layout_height="407dp"
             android:layout_gravity="center_horizontal"
-            android:padding="24dp"
-            >
+            android:orientation="vertical"
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Welcome Back!"
-                android:textSize="36sp"
                 android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/dark_purble"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:padding="8dp"
+                android:layout_marginTop="25dp"
+                android:drawablePadding="8dp"
                 android:hint="Email"
-                android:textColor="@color/black"
-                android:drawablePadding="8dp"/>
+                android:padding="8dp"
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
+                android:drawablePadding="8dp"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:hint="Password"
-                android:textColor="@color/black"
-                android:drawablePadding="8dp"
-                />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/dark_purble"
                 android:text="Login"
                 android:textSize="18sp"
-                android:layout_marginTop="30dp"
-                android:backgroundTint="@color/black"
-                app:cornerRadius = "20dp"/>
+                app:cornerRadius="20dp" />
 
             <TextView
                 android:id="@+id/forgot_password"
@@ -82,9 +89,9 @@
                 android:id="@+id/signUpRedirectText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:padding="8dp"
-                android:layout_gravity="center"
                 android:text="Not yet registered? Sign Up"
                 android:textAlignment="center"
                 android:textColor="@color/black"
