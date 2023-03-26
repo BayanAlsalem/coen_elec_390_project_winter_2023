@@ -12,11 +12,18 @@ import com.example.coen_elec_390_project_winter_2023.R;
 public class PatientInstructionsStep5 extends AppCompatActivity {
 
     Button nextButton5, backButton5;
-
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_instructions_step5);
+
+        if (getIntent().getExtras() != null) {
+            userID=getIntent().getStringExtra("userID");
+        }else{
+            System.out.println("Intent Failed");
+            return;
+        }
 
         nextButton5 = findViewById(R.id.btn_next5);
         backButton5 = findViewById(R.id.btn_back5);
@@ -24,7 +31,8 @@ public class PatientInstructionsStep5 extends AppCompatActivity {
         nextButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PatientInstructionsStep5.this, PatientRestTest.class);
+                Intent intent = new Intent(PatientInstructionsStep5.this, BluetoothConnectionActivity.class);
+                intent.putExtra("userID",userID);
                 startActivity(intent);
             }
         });
