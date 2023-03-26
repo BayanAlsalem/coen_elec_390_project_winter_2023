@@ -7,9 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,24 +16,17 @@ import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
 import com.anychart.anychart.Cartesian;
 import com.anychart.anychart.DataEntry;
-import com.anychart.anychart.Pie;
 import com.anychart.anychart.ValueDataEntry;
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
-import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Reading;
 import com.example.coen_elec_390_project_winter_2023.R;
-import com.example.coen_elec_390_project_winter_2023.SignUp.PatientSignUpActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PatientDashboardActivity extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity {
     //TODO change the name of this class to ReadingResults or Results or GraphResults
 
     List<DataEntry> data = new ArrayList<>();
@@ -92,7 +82,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
         readingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(PatientDashboardActivity.this, PatientInstructionsActivity.class);
+                Intent intent= new Intent(ResultsActivity.this, PatientInstructionsActivity.class);
                 intent.putExtra("userID",userID);
                 startActivity(intent);
             }
@@ -143,7 +133,7 @@ public class PatientDashboardActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.patient_logout:
                 firebaseHelper.logout();
-                startActivity(new Intent(PatientDashboardActivity.this, SplashActivity.class));
+                startActivity(new Intent(ResultsActivity.this, SplashActivity.class));
                 finish();
                 return true;
         }

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="top"
     android:background="#5CE1E6"
-    tools:context="Dashboard.PatientDashboardActivity">
+    tools:context=".Dashboard.ResultsActivity">
 
     <TextView
         android:id="@+id/dashboard_view"
