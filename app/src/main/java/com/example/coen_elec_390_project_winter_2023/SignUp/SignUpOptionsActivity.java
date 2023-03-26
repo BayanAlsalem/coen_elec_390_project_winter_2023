@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 public class SignUpOptionsActivity extends AppCompatActivity {
-    //This class directs the user to the login page based on the type of user
+
     private Button doctorSignUpBtn;
     private Button patientSignUpBtn;
 
@@ -24,7 +24,7 @@ public class SignUpOptionsActivity extends AppCompatActivity {
         patientSignUpBtn = findViewById(R.id.patientSignUpBtnID);
 
         doctorSignUpBtn.setOnClickListener(new View.OnClickListener() {
-            //When click on the Doctor button, the user will be directed to the LoginActivity screen
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpOptionsActivity.this, DoctorSignUpActivity.class);
@@ -34,7 +34,6 @@ public class SignUpOptionsActivity extends AppCompatActivity {
         });
 
         patientSignUpBtn.setOnClickListener(new View.OnClickListener() {
-            //When click on the Patient button, the user will be directed to the LoginActivity screen
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpOptionsActivity.this, PatientSignUpActivity.class);

@@ -39,24 +39,24 @@ public class PatientDashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//
-//        // Set click listeners for takeReadings
-//        TextView takeReadingsText = findViewById(R.id.takeReadingsTextID);
-//        ImageView takeReadingsImage = findViewById(R.id.takeReadingsImageID);
-//        takeReadingsText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(PatientDashboard.this, takeReadings.class);
-//                startActivity(intent);
-//            }
-//        });
-//        takeReadingsImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(PatientDashboard.this, takeReadings.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        // Set click listeners for takeReadings
+        TextView takeReadingsText = findViewById(R.id.takeReadingsTextID);
+        ImageView takeReadingsImage = findViewById(R.id.takeReadingsImageID);
+        takeReadingsText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PatientDashboard.this, PatientInstructionsActivity.class);
+                startActivity(intent);
+            }
+        });
+        takeReadingsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PatientDashboard.this, PatientInstructionsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Set click listeners for instructions
         TextView instructionsText = findViewById(R.id.instructionsTextID);

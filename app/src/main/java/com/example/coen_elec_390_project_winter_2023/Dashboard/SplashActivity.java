@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity{
         signupBtn = findViewById(R.id.signupBtn);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
-            //When click on the Signup button, the user will be directed to the SignupActivity screen
+            //When click on the Signup button, the user will be directed to the Signup Options Activity screen
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SplashActivity.this, SignUpOptionsActivity.class);

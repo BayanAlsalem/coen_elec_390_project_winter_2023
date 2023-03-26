@@ -13,9 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboard;
-import com.example.coen_elec_390_project_winter_2023.Dashboard.DoctorDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboard;
-import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboardActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.User;
 import com.example.coen_elec_390_project_winter_2023.Models.userOptions;
 import com.example.coen_elec_390_project_winter_2023.R;
@@ -43,14 +41,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onSuccess(User user) {
                     if (user.getUserType() == userOptions.userType.PATIENT){
                         //To Do: we need to pass user object to either dashboards (eg: putExtra)
-                        Intent intent = new Intent(LoginActivity.this, PatientDashboardActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, PatientDashboard.class);
                         intent.putExtra("userID",user.getUid());
                         intent.putExtra("userName",user.getName());
                         intent.putExtra("userEmail",user.getEmail());
                         startActivity(intent);
                     } else if (user.getUserType() == userOptions.userType.DOCTOR){
                         //To Do: we need to pass user object to either dashboards (eg: putExtra)
-                        startActivity(new Intent(LoginActivity.this, DoctorDashboardActivity.class));
+                        startActivity(new Intent(LoginActivity.this, DoctorDashboard.class));
                     }
                     finish();
                 }
@@ -112,4 +110,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }//end of onCreate() function
-}//end of PatientLoginActivity{} class
+}//end of LoginActivity{} class

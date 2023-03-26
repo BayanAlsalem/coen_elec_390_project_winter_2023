@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Dashboard.PatientDashboard;
 import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Patient;
 import com.example.coen_elec_390_project_winter_2023.R;
@@ -30,11 +31,13 @@ public class PatientSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_signup_layout);
 
+        patientFullName = findViewById(R.id.patientFullNameID);
         patientEmailSignUp = findViewById(R.id.patientEmailSignUpID);
         patientPasswordSignup = findViewById(R.id.patientPasswordSignupID);
+
         signupBtnFromPatientSignupLayout = findViewById(R.id.signupBtnFromPatientSignupLayout);
         patientLoginRedirectText = findViewById(R.id.loginRedirectTextFromPatientSignupLayout);
-        patientFullName = findViewById(R.id.patientFullNameID);
+
 
         signupBtnFromPatientSignupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +59,7 @@ public class PatientSignUpActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(PatientSignUpActivity.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(PatientSignUpActivity.this, LoginActivity.class));
+                            startActivity(new Intent(PatientSignUpActivity.this, PatientDashboard.class));
                             PatientSignUpActivity.this.finish();
                         }
                         @Override

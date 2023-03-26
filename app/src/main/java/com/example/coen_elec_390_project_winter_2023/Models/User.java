@@ -2,6 +2,7 @@ package com.example.coen_elec_390_project_winter_2023.Models;
 
 public abstract class User {
     public String uid;
+    public String hospital;
     public String name;
     public String email;
     public String password;
@@ -13,6 +14,8 @@ public abstract class User {
     public void setUID(String uid) {
         this.uid = uid;
     }
+    public String getHospital(){return hospital;}
+    public void setHospital(String hospital){this.hospital = hospital;}
     public String getName() {
         return name;
     }

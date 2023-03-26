@@ -2,16 +2,20 @@ package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 public class DoctorDashboard extends AppCompatActivity {
-
+    FirebaseHelper firebaseHelper = new FirebaseHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -90,6 +94,27 @@ public class DoctorDashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_doctor_dashboard, menu);
+        return true;
+    }
+    // this event will enable the back
+    // function to the button on press
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.doctor_logout:
+                firebaseHelper.logout();
+                startActivity(new Intent(DoctorDashboard.this, HomeActivity.class));
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

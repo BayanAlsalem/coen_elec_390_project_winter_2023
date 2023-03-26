@@ -16,9 +16,9 @@ import com.example.coen_elec_390_project_winter_2023.Models.Doctor;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 public class DoctorSignUpActivity extends AppCompatActivity {
-    //This class integrates Firebase Authentication service and signs up a user
+
     FirebaseHelper firebaseHelper = new FirebaseHelper();
-    private EditText doctorEmailSignUp, doctorPasswordSignup, doctorFullName;
+    private EditText doctorEmailSignUp, doctorPasswordSignup, doctorFullName, hospitalName;
     private Button signupBtnFromDoctorSignupLayout;
     private TextView doctorLoginRedirectText;
 
@@ -28,11 +28,13 @@ public class DoctorSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doctor_signup_layout);
 
+        doctorFullName = findViewById(R.id.doctorFullNameID);
+        hospitalName = findViewById(R.id.doctorHospitalNameID);
         doctorEmailSignUp = findViewById(R.id.doctorEmailSignUpID);
         doctorPasswordSignup = findViewById(R.id.doctorPasswordSignupID);
         signupBtnFromDoctorSignupLayout = findViewById(R.id.signupBtnFromDoctorSignupLayout);
         doctorLoginRedirectText = findViewById(R.id.loginRedirectTextFromDoctorSignupLayout);
-        doctorFullName = findViewById(R.id.doctorFullNameID);
+
 
         signupBtnFromDoctorSignupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +42,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
                 String user = doctorEmailSignUp.getText().toString().trim();
                 String pass = doctorPasswordSignup.getText().toString().trim();
                 String name = doctorFullName.getText().toString().trim();
+                String hospital = hospitalName.getText().toString().trim();
 
                 if (user.isEmpty()){
                     doctorEmailSignUp.setError("Please provide an email address to continue registration!");
@@ -49,7 +52,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
                     doctorPasswordSignup.setError("Please provide a password to continue registration! ");
                 } else{
                     //Firebase integration to create a user
-                    Doctor doctor = new Doctor(name, user, pass, null);
+                    Doctor doctor = new Doctor(name, hospital,user, pass, null);
                     firebaseHelper.createUser(doctor, new FirebaseHelper.voidCallbackInterface() {
                         @Override
                         public void onSuccess() {

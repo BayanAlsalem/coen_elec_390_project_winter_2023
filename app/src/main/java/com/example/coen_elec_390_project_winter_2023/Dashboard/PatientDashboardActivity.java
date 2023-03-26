@@ -37,6 +37,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class PatientDashboardActivity extends AppCompatActivity {
+    //TODO change the name of this class to ReadingResults or Results or GraphResults
+
     List<DataEntry> data = new ArrayList<>();
     FirebaseHelper firebaseHelper = new FirebaseHelper();
     List<Reading> listTest = new ArrayList<Reading>();

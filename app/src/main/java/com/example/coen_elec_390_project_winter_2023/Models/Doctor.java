@@ -5,8 +5,9 @@ public class Doctor extends User {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Doctor(String name, String email, String password, String uid) {
+    public Doctor(String name,String hospital, String email, String password, String uid) {
         this.name = name;
+        this.hospital = hospital;
         this.email = email;
         this.password = password;
         this.uid = uid;

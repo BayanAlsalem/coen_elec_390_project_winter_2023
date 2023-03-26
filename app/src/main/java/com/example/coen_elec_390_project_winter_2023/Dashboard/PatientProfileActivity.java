@@ -11,7 +11,8 @@ import com.example.coen_elec_390_project_winter_2023.R;
 
 
 public class PatientProfileActivity extends AppCompatActivity {
-
+//TODO Patient is only allowed to edit when click on EDIT and then SAVE to store in the database
+    //TODO the name of the patient is always NULL!!
 
         private TextView patientFullName;
         private EditText fullNameEditText;
@@ -19,7 +20,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         private EditText emailEditText;
         private EditText passwordEditText;
         private EditText doctorNameEditText;
-        private Button editButton;
+        private Button editButton, saveButton;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class PatientProfileActivity extends AppCompatActivity {
             passwordEditText = findViewById(R.id.passwordSignupID);
             doctorNameEditText = findViewById(R.id.doctorNameID);
             editButton = findViewById(R.id.editBtnPatientID);
+            saveButton = findViewById(R.id.saveBtnPatientID);
 
             // Get the patient name from the intent
             String patientNameString = getIntent().getStringExtra("patientName");

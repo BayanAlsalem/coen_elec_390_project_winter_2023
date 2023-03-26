@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="top"
     android:background="#5CE1E6"
-    tools:context="Dashboard.DoctorDashboardActivity">
+    tools:context="Dashboard.ListOfPatientsActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

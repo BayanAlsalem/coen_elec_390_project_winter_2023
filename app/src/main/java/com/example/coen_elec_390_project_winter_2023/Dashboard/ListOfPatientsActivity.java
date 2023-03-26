@@ -66,7 +66,7 @@ public class ListOfPatientsActivity extends AppCompatActivity{
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ListOfPatientsActivity.this, "You clicked on " + patientList.get(i), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListOfPatientsActivity.this, patientList.get(i), Toast.LENGTH_SHORT).show();
                 // intent to open patient's profile and send the patient's name through intent
                 Intent intent = new Intent(ListOfPatientsActivity.this, PatientProfileActivity.class);
                 intent.putExtra("patientName", patientList.get(i));
