@@ -2,6 +2,7 @@ package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,12 +50,18 @@ public class MyDataActivity extends AppCompatActivity {
         anyChartView = findViewById(R.id.my_data_chart1);
         spinner = findViewById(R.id.spinnerId);
 
+        // chart config
         line = AnyChart.line();
+        line.getXAxis().setTitle("Time [s]");
+        line.getYAxis().setTitle("Amplitude [mv]");
+        line.setPalette(new String[]{"#8C89C2"});
+        line.setTitle("Flexed Values");
+        line.setAnimation(true);
+        line.getXAxis().getLabels().setFontColor("#8C89C2");
+        line.getYAxis().getLabels().setFontColor("#8C89C2");
+
+        updateSpinner();
         updateGraph();
-        // add the spinnerArray to the spinner
-        adapter = new ArrayAdapter<String>(MyDataActivity.this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         // when a different date in the spinner is chosen, update the graph to show the new data on that date
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -65,7 +72,6 @@ public class MyDataActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                updateGraph();
 
             }
         });
@@ -102,20 +108,8 @@ public class MyDataActivity extends AppCompatActivity {
         return data;
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        updateGraph();
-//    }
-
-    public void updateGraph(){
-
-
-        anyChartView.setChart(line);
-
-
-        System.out.println("Update Graph..");
-        //get the patientId from intent extras
+// function to get dates from firebase and add them to the spinner
+    public void updateSpinner(){
         String userID = getIntent().getStringExtra("patientId");
         System.out.println(userID);
 
@@ -131,48 +125,74 @@ public class MyDataActivity extends AppCompatActivity {
                     }
                 });
 
-                // print the reading dates of each element in the listtest
-                for(int i=0;i<listTest.size();i++){
-                    // only put in log the date
-                    Log.d("Readings","Date: "+listTest.get(i).getReadingDate());
-                    // add the date to the spinnerarray
+                for (int i = 0; i < listTest.size(); i++) {
+                    // add the date to the spinnerArray
                     spinnerArray.add(listTest.get(i).getReadingDate().toString());
                 }
-
-
-                Log.d("Readings","Reading List: "+readingsList.get(0).toString());
-                // only put in log the date
-                Log.d("Readings","Date: "+readingsList.get(0).getReadingDate());
-
-                if(listTest.size()!=0) {
-                    // check the spinner value and loop through the spinner array and get the corresponding flexed values
-                    for(int i=0;i<spinnerArray.size();i++){
-                        if(spinner.getSelectedItem().toString().equals(spinnerArray.get(i))){
-                            data=listToEntry(listTest.get(i).getFlexedValues());
-                        }
-                    }
-                }
-
-                line = AnyChart.line();
-                line.getXAxis().setTitle("Time [s]");
-                line.getYAxis().setTitle("Amplitude [mv]");
-                line.setPalette(new String[]{"#8C89C2"});
-                line.setTitle("Flexed Values");
-                line.setAnimation(true);
-                line.getXAxis().getLabels().setFontColor("#8C89C2");
-                line.getYAxis().getLabels().setFontColor("#8C89C2");
-                line.setData(data);
-                anyChartView.setChart(line);
-
-
+                // add the spinnerArray to the spinner
+                adapter = new ArrayAdapter<String>(MyDataActivity.this, android.R.layout.simple_spinner_item, spinnerArray);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
             }
 
             @Override
             public void onFail(Exception e) {
+                Log.d("Readings", "Error: " + e.getMessage());
 
             }
         });
     }
+
+
+
+
+    public void updateGraph(){
+
+        //get the patientId from intent extras
+        String userID = getIntent().getStringExtra("patientId");
+
+        firebaseHelper.getReadingsDoctor(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
+            @Override
+            public void onSuccess(List<Reading> readingsList) {
+                // Sort the readings by date
+                Collections.sort(readingsList, new Comparator<Reading>() {
+                    public int compare(Reading o1, Reading o2) {
+                        if (o1.getReadingDate() == null || o2.getReadingDate() == null)
+                            return 0;
+                        return o2.getReadingDate().compareTo(o1.getReadingDate());
+                    }
+                });
+
+                // Get the selected date from the spinner
+                String selectedDate = spinner.getSelectedItem().toString();
+                Log.d("Readings","Date: "+ selectedDate);
+
+                // Clear the existing data
+                data.clear();
+
+                // Loop through the readings and add the data for the selected date to the chart
+                List<Integer> flexedValues = new ArrayList<Integer>();
+                for(int i=0;i<listTest.size();i++){
+                    if(listTest.get(i).getReadingDate().toString().equals(selectedDate)){
+                        flexedValues = listTest.get(i).getFlexedValues();
+                    }
+                }
+
+                // Convert the flexed values to data entries
+                data = listToEntry(flexedValues);
+
+                // Add the data to the chart
+                line.data(data);
+                anyChartView.setChart(line);
+            }
+
+            @Override
+            public void onFail(Exception e) {
+                Log.d("Readings", "Error: " + e.getMessage());
+            }
+        });
+    }
+
 
 }//end of MyDataActivity class
 
