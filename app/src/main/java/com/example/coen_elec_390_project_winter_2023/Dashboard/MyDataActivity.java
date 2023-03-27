@@ -177,6 +177,7 @@ public class MyDataActivity extends AppCompatActivity {
                         flexedValues = listTest.get(i).getFlexedValues();
                     }
                 }
+                System.out.println(flexedValues);
 
                 // Convert the flexed values to data entries
                 data = listToEntry(flexedValues);
