@@ -201,7 +201,6 @@ public class FirebaseHelper {
         getCurrentUser(new getUserCallbackInterface() {
             public void onSuccess(User user) {
                 if (user.getUserType() == userOptions.userType.PATIENT) {
-
                     {
                         if (user.getUid().equals(userID)) {
                             db().collection(DB_USERS_COLLECTION).document(user.getUid()).collection(DB_READINGS_COLLECTION).get()
@@ -225,13 +224,49 @@ public class FirebaseHelper {
                         }
                     }
                 }
+                else
+                {
+                    Log.d("Readings","NOT A PATIENT");
+                }
             }
             @Override
             public void onFail(Exception e) {
                 Log.d("Readings","GETING READINGS FAILED");
             }
         });
-        //Log.d("Readings","ReadingsList: "+readingsList.toString());
+//        Log.d("Readings","ReadingsList: "+readingsList.toString());
+        return readingsList;
+    }
+
+    public List<Reading> getReadingsDoctor(String userID, getReadingsListCallbackInterface callback){
+        List<Reading> readingsList= new ArrayList<>();
+        getCurrentUser(new getUserCallbackInterface() {
+            public void onSuccess(User user) {
+                            db().collection(DB_USERS_COLLECTION).document(userID).collection(DB_READINGS_COLLECTION).get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    //Log.d("Readings", document.getId() + " => " + document.getData());
+                                                    Reading temp = document.toObject(Reading.class);
+                                                    //Log.d("Readings","TEMP VARIABLE"+temp.toString());
+                                                    readingsList.add(temp);
+                                                }
+                                                callback.onSuccess(readingsList);
+                                            } else {
+                                                Log.d("Readings", "Error getting documents: ", task.getException());
+                                                callback.onFail(task.getException());
+                                            }
+                                        }
+                                    });
+            }
+            @Override
+            public void onFail(Exception e) {
+                Log.d("Readings","GETING READINGS FAILED");
+            }
+        });
+//        Log.d("Readings","ReadingsList: "+readingsList.toString());
         return readingsList;
     }
 

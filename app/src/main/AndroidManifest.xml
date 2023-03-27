@@ -150,6 +150,12 @@
             android:name=".Dashboard.BluetoothAsyncTask">
         </activity>
 
+        <activity
+            android:parentActivityName=".Dashboard.HomeActivity"
+            android:name=".Dashboard.MyDataActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+
 
 
     </application>

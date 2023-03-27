@@ -6,30 +6,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
 import com.anychart.anychart.Cartesian;
 import com.anychart.anychart.DataEntry;
-import com.anychart.anychart.Pie;
 import com.anychart.anychart.ValueDataEntry;
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
-import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Reading;
 import com.example.coen_elec_390_project_winter_2023.R;
-import com.example.coen_elec_390_project_winter_2023.SignUp.PatientSignUpActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,32 +36,39 @@ public class MyDataActivity extends AppCompatActivity {
     List<DataEntry> data = new ArrayList<>();
     FirebaseHelper firebaseHelper = new FirebaseHelper();
     List<Reading> listTest = new ArrayList<Reading>();
-
-    String userID;
-    String userEmail;
-
-    Cartesian line = AnyChart.line();
+    static Cartesian line;
     AnyChartView anyChartView;
+    Spinner spinner;
+    ArrayAdapter<String> adapter;
+    List<String> spinnerArray = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_data_activity);
         anyChartView = findViewById(R.id.my_data_chart1);
+        spinner = findViewById(R.id.spinnerId);
 
-
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                userEmail = extras.getString("userEmail");
-                userID = extras.getString("userID");
-            }
-        } else {
-            userEmail = savedInstanceState.getString("userEmail");
-            userID = savedInstanceState.getString("userID");
-        }
-
-
+        line = AnyChart.line();
         updateGraph();
+        // add the spinnerArray to the spinner
+        adapter = new ArrayAdapter<String>(MyDataActivity.this, android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // when a different date in the spinner is chosen, update the graph to show the new data on that date
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateGraph();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                updateGraph();
+
+            }
+        });
 
     }//end of onCreate() function
 
@@ -93,27 +96,33 @@ public class MyDataActivity extends AppCompatActivity {
     public List<DataEntry> listToEntry(List<Integer> reading){
         List<DataEntry> data = new ArrayList<>();
         for(int i=0;i<reading.size();i++){
-            data.add(new ValueDataEntry(i*150, reading.get(i)));
+            data.add(new ValueDataEntry((i*150), reading.get(i)));
         }
 
         return data;
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        updateGraph();
+//    }
+
     public void updateGraph(){
 
 
         anyChartView.setChart(line);
 
+
         System.out.println("Update Graph..");
-        // get patientId from extra intent
-        String patientId = getIntent().getStringExtra("patientId");
-        System.out.println(patientId);
+        //get the patientId from intent extras
+        String userID = getIntent().getStringExtra("patientId");
+        System.out.println(userID);
 
-
-        listTest= firebaseHelper.getReadings(patientId, new FirebaseHelper.getReadingsListCallbackInterface() {
+        listTest= firebaseHelper.getReadingsDoctor(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
             public void onSuccess(List<Reading> readingsList) {
                 listTest = readingsList;
-                System.out.println("ReadingsList: "+ listTest.size());
                 Collections.sort(listTest, new Comparator<Reading>() {
                     public int compare(Reading o1, Reading o2) {
                         if (o1.getReadingDate() == null || o2.getReadingDate() == null)
@@ -122,28 +131,49 @@ public class MyDataActivity extends AppCompatActivity {
                     }
                 });
 
-                Log.d("Readings","ReadingsList: "+readingsList.get(0).toString());
-                System.out.println("ReadingsList: "+readingsList.get(0).toString());
+                // print the reading dates of each element in the listtest
+                for(int i=0;i<listTest.size();i++){
+                    // only put in log the date
+                    Log.d("Readings","Date: "+listTest.get(i).getReadingDate());
+                    // add the date to the spinnerarray
+                    spinnerArray.add(listTest.get(i).getReadingDate().toString());
+                }
+
+
+                Log.d("Readings","Reading List: "+readingsList.get(0).toString());
+                // only put in log the date
+                Log.d("Readings","Date: "+readingsList.get(0).getReadingDate());
 
                 if(listTest.size()!=0) {
-                    data=listToEntry(listTest.get(0).getFlexedValues());
+                    // check the spinner value and loop through the spinner array and get the corresponding flexed values
+                    for(int i=0;i<spinnerArray.size();i++){
+                        if(spinner.getSelectedItem().toString().equals(spinnerArray.get(i))){
+                            data=listToEntry(listTest.get(i).getFlexedValues());
+                        }
+                    }
                 }
 
                 line = AnyChart.line();
+                line.getXAxis().setTitle("Time [s]");
+                line.getYAxis().setTitle("Amplitude [mv]");
+                line.setPalette(new String[]{"#8C89C2"});
+                line.setTitle("Flexed Values");
+                line.setAnimation(true);
+                line.getXAxis().getLabels().setFontColor("#8C89C2");
+                line.getYAxis().getLabels().setFontColor("#8C89C2");
                 line.setData(data);
                 anyChartView.setChart(line);
+
+
             }
 
             @Override
             public void onFail(Exception e) {
-                System.out.println("Error: "+e);
 
             }
         });
-
-        System.out.println("Done: "+ listTest.size());
     }
 
-}//end of PatientDashboardActivity{} class
+}//end of MyDataActivity class
 
 
