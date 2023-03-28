@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="Dashboard.PatientDashboard">
 
-    <com.anychart.anychart.AnyChartView
+    <com.anychart.AnyChartView
         android:id="@+id/my_data_chart1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

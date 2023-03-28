@@ -16,11 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.anychart.anychart.AnyChart;
-import com.anychart.anychart.AnyChartView;
-import com.anychart.anychart.Cartesian;
-import com.anychart.anychart.DataEntry;
-import com.anychart.anychart.ValueDataEntry;
+import com.anychart.APIlib;
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Line;
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.Models.Reading;
 import com.example.coen_elec_390_project_winter_2023.R;
@@ -34,11 +36,20 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MyDataActivity extends AppCompatActivity {
-    List<DataEntry> data = new ArrayList<>();
+    // firebase variables
     FirebaseHelper firebaseHelper = new FirebaseHelper();
+
+    // lists
+    List<DataEntry> data = new ArrayList<>();
     List<Reading> listTest = new ArrayList<Reading>();
+
+    // graph variables
     static Cartesian line;
     AnyChartView anyChartView;
+    static Line series;
+
+
+    //spinner variables
     Spinner spinner;
     ArrayAdapter<String> adapter;
     List<String> spinnerArray = new ArrayList<String>();
@@ -50,15 +61,11 @@ public class MyDataActivity extends AppCompatActivity {
         anyChartView = findViewById(R.id.my_data_chart1);
         spinner = findViewById(R.id.spinnerId);
 
-        // chart config
         line = AnyChart.line();
-        line.getXAxis().setTitle("Time [s]");
-        line.getYAxis().setTitle("Amplitude [mv]");
-        line.setPalette(new String[]{"#8C89C2"});
-        line.setTitle("Flexed Values");
-        line.setAnimation(true);
-        line.getXAxis().getLabels().setFontColor("#8C89C2");
-        line.getYAxis().getLabels().setFontColor("#8C89C2");
+        anyChartView.setChart(line);
+
+
+
 
         updateSpinner();
         updateGraph();
@@ -68,10 +75,12 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 updateGraph();
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                updateGraph();
 
             }
         });
@@ -177,14 +186,59 @@ public class MyDataActivity extends AppCompatActivity {
                         flexedValues = listTest.get(i).getFlexedValues();
                     }
                 }
-                System.out.println(flexedValues);
+                System.out.println("NEW VALUES:" + flexedValues);
+
+                System.out.println("data after being cleared: " + data);
 
                 // Convert the flexed values to data entries
                 data = listToEntry(flexedValues);
 
+                System.out.println("data after being converted: " + data);
+
+
+                // chart config
+                line.animation(true);
+                line.xAxis(0)
+                        .stroke("#8C89C2")
+                        .title("Time [s]");
+
+                line.yAxis(0)
+                        .stroke("#8C89C2")
+                        .title("Amplitude [mv]");
+                line.title("Flexed Values");
+
+                //remove data from the chart
+                line.removeAllSeries();
+
+
                 // Add the data to the chart
+                APIlib.getInstance().setActiveAnyChartView(anyChartView);
                 line.data(data);
-                anyChartView.setChart(line);
+
+
+
+//                final Handler handler = new Handler();
+//                final Runnable runnable = new Runnable() {
+//                    public void run() {
+//                        List<Integer> flexedValues = new ArrayList<Integer>();
+//                        for(int i=0;i<listTest.size();i++){
+//                            if(listTest.get(i).getReadingDate().toString().equals(selectedDate)){
+//                                flexedValues = listTest.get(i).getFlexedValues();
+//                            }
+//                        }
+//                        System.out.println("NEW VALUES:" + flexedValues);
+//                        data = listToEntry(flexedValues);
+//                        line.data(data);
+
+
+
+//                        handler.postDelayed(this, delayMillis);
+//                    }
+//                };
+//                handler.postDelayed(runnable, 100);
+
+
+
             }
 
             @Override
