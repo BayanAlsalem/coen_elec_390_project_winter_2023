@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,10 @@ import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
 import com.anychart.core.cartesian.series.Line;
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Reading;
+import com.example.coen_elec_390_project_winter_2023.Models.User;
+import com.example.coen_elec_390_project_winter_2023.Models.userOptions;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 
@@ -53,18 +58,40 @@ public class MyDataActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     List<String> spinnerArray = new ArrayList<String>();
 
+    //button variables
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_data_activity);
         anyChartView = findViewById(R.id.my_data_chart1);
         spinner = findViewById(R.id.spinnerId);
+        button = findViewById(R.id.request_appointmentId);
 
         line = AnyChart.line();
         anyChartView.setChart(line);
 
+        //get intent from previous activity
+        String userID = getIntent().getStringExtra("patientId");
 
+        // if user is a patient, hide the request appointment button
+        firebaseHelper.getCurrentUser(new FirebaseHelper.getUserCallbackInterface() {
+            @Override
+            public void onSuccess(User user) {
+                if (user.getUserType() == userOptions.userType.PATIENT){
+                    button.setVisibility(View.INVISIBLE);
 
+                } else if (user.getUserType() == userOptions.userType.DOCTOR){
+                    button.setVisibility(View.VISIBLE);
+
+                }
+            }
+            @Override
+            public void onFail(Exception e) {
+                Log.d("Error", "Error getting user");
+            }
+        });
 
         updateSpinner();
         updateGraph();
