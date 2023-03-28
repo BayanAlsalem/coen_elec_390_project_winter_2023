@@ -2,7 +2,6 @@ package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -122,7 +121,7 @@ public class MyDataActivity extends AppCompatActivity {
         String userID = getIntent().getStringExtra("patientId");
         System.out.println(userID);
 
-        listTest= firebaseHelper.getReadingsDoctor(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
+        listTest= firebaseHelper.getReadingsNotCurrentUser(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
             public void onSuccess(List<Reading> readingsList) {
                 listTest = readingsList;
@@ -138,10 +137,11 @@ public class MyDataActivity extends AppCompatActivity {
                     // add the date to the spinnerArray
                     spinnerArray.add(listTest.get(i).getReadingDate().toString());
                 }
-                // add the spinnerArray to the spinner
-                adapter = new ArrayAdapter<String>(MyDataActivity.this, android.R.layout.simple_spinner_item, spinnerArray);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // add the spinnerArray to the spinner and show it has a dropdown with arrow
+                adapter = new ArrayAdapter<String>(MyDataActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
                 spinner.setAdapter(adapter);
+
+
             }
 
             @Override
@@ -160,7 +160,7 @@ public class MyDataActivity extends AppCompatActivity {
         //get the patientId from intent extras
         String userID = getIntent().getStringExtra("patientId");
 
-        firebaseHelper.getReadingsDoctor(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
+        firebaseHelper.getReadingsNotCurrentUser(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
             public void onSuccess(List<Reading> readingsList) {
                 // Sort the readings by date
@@ -197,15 +197,29 @@ public class MyDataActivity extends AppCompatActivity {
 
 
                 // chart config
-                line.animation(true);
                 line.xAxis(0)
-                        .stroke("#8C89C2")
-                        .title("Time [s]");
+                        .title("Time [s]")
+                        .stroke("#000000 3")
+                        .labels().fontSize(16).fontColor("#8C89C2");
+
+                line.xAxis(0).ticks().stroke("#000000 3");
+                line.xAxis(0).minorTicks().stroke("#CCCCCC 3");
+                line.xAxis(0).title().fontSize(16);
+
 
                 line.yAxis(0)
-                        .stroke("#8C89C2")
-                        .title("Amplitude [mv]");
+                        .title("Amplitude [mv]")
+                        .stroke("#000000 3")
+                        .labels().fontSize(16).fontColor("#8C89C2");
+
+                line.yAxis(0).ticks().stroke("#000000 3");
+                line.yAxis(0).minorTicks().stroke("#CCCCCC 3");
+                line.yAxis(0).title().fontSize(16);
+
+
                 line.title("Flexed Values");
+                line.title().fontSize(20).fontColor("#8C89C2");
+
 
                 //remove data from the chart
                 line.removeAllSeries();
@@ -213,31 +227,7 @@ public class MyDataActivity extends AppCompatActivity {
 
                 // Add the data to the chart
                 APIlib.getInstance().setActiveAnyChartView(anyChartView);
-                line.data(data);
-
-
-
-//                final Handler handler = new Handler();
-//                final Runnable runnable = new Runnable() {
-//                    public void run() {
-//                        List<Integer> flexedValues = new ArrayList<Integer>();
-//                        for(int i=0;i<listTest.size();i++){
-//                            if(listTest.get(i).getReadingDate().toString().equals(selectedDate)){
-//                                flexedValues = listTest.get(i).getFlexedValues();
-//                            }
-//                        }
-//                        System.out.println("NEW VALUES:" + flexedValues);
-//                        data = listToEntry(flexedValues);
-//                        line.data(data);
-
-
-
-//                        handler.postDelayed(this, delayMillis);
-//                    }
-//                };
-//                handler.postDelayed(runnable, 100);
-
-
+                line.line(data).stroke("3 #8C89C2");
 
             }
 

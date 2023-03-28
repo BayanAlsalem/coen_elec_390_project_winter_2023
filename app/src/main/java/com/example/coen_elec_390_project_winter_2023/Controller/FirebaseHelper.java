@@ -238,7 +238,7 @@ public class FirebaseHelper {
         return readingsList;
     }
 
-    public List<Reading> getReadingsDoctor(String userID, getReadingsListCallbackInterface callback){
+    public List<Reading> getReadingsNotCurrentUser(String userID, getReadingsListCallbackInterface callback){
         List<Reading> readingsList= new ArrayList<>();
         getCurrentUser(new getUserCallbackInterface() {
             public void onSuccess(User user) {
