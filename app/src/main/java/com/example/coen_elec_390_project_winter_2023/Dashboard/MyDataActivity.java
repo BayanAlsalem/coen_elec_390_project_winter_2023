@@ -61,6 +61,9 @@ public class MyDataActivity extends AppCompatActivity {
     //button variables
     Button button;
 
+
+    public static boolean hasData = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,44 +77,81 @@ public class MyDataActivity extends AppCompatActivity {
 
         //get intent from previous activity
         String userID = getIntent().getStringExtra("patientId");
+        System.out.println(userID);
 
         // if user is a patient, hide the request appointment button
         firebaseHelper.getCurrentUser(new FirebaseHelper.getUserCallbackInterface() {
             @Override
             public void onSuccess(User user) {
-                if (user.getUserType() == userOptions.userType.PATIENT){
+                if (user.getUserType() == userOptions.userType.PATIENT) {
                     button.setVisibility(View.INVISIBLE);
 
-                } else if (user.getUserType() == userOptions.userType.DOCTOR){
+                } else if (user.getUserType() == userOptions.userType.DOCTOR) {
                     button.setVisibility(View.VISIBLE);
 
                 }
             }
+
             @Override
             public void onFail(Exception e) {
                 Log.d("Error", "Error getting user");
             }
         });
 
-        updateSpinner();
-        updateGraph();
+        checkData();
+        System.out.println("after check "+hasData);
 
-        // when a different date in the spinner is chosen, update the graph to show the new data on that date
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        if(hasData) {
+            updateSpinner();
+            updateGraph();
+
+            // when a different date in the spinner is chosen, update the graph to show the new data on that date
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    updateGraph();
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    updateGraph();
+
+                }
+            });
+        }else {
+            Toast.makeText(MyDataActivity.this, "No data to display", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MyDataActivity.this, SplashActivity.class));
+            finish();
+        }
+
+    }//end of onCreate() function
+
+    // function to check if user has data in readings
+    public void checkData(){
+        String userID = getIntent().getStringExtra("patientId");
+        System.out.println(userID);
+
+        firebaseHelper.getReadingsNotCurrentUser(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateGraph();
-
+            public void onSuccess(List<Reading> readingsList) {
+                if(readingsList.size() > 0){
+                    System.out.println("has data");
+                    hasData = true;
+                }else{
+                    System.out.println("no data");
+                    hasData = false;
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                updateGraph();
-
+            public void onFail(Exception e) {
+                Log.d("Error", "Error getting readings");
+                hasData = false;
             }
         });
 
-    }//end of onCreate() function
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,6 +183,8 @@ public class MyDataActivity extends AppCompatActivity {
         return data;
     }
 
+
+
 // function to get dates from firebase and add them to the spinner
     public void updateSpinner(){
         String userID = getIntent().getStringExtra("patientId");
@@ -160,6 +202,7 @@ public class MyDataActivity extends AppCompatActivity {
                     }
                 });
 
+
                 for (int i = 0; i < listTest.size(); i++) {
                     // add the date to the spinnerArray
                     spinnerArray.add(listTest.get(i).getReadingDate().toString());
@@ -175,9 +218,11 @@ public class MyDataActivity extends AppCompatActivity {
             public void onFail(Exception e) {
                 Log.d("Readings", "Error: " + e.getMessage());
 
+
             }
         });
     }
+
 
 
 
