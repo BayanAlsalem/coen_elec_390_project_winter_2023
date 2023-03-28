@@ -82,7 +82,7 @@
 
         <activity
             android:name=".Dashboard.PatientContractTest"
-            android:parentActivityName=".Dashboard.ResultsActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboard" >
         </activity>
 
         <activity
@@ -127,7 +127,7 @@
 
         <activity
             android:name=".Dashboard.PatientRestTest"
-            android:parentActivityName=".Dashboard.ResultsActivity" >
+            android:parentActivityName=".Dashboard.PatientDashboard" >
         </activity>
 
         <activity

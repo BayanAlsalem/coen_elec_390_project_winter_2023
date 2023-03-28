@@ -124,8 +124,10 @@ public class PatientContractTest extends BluetoothReadingsActivity{
             @Override
             public void onClick(View view) {
                 if(ready) {
-                    Intent intent = new Intent(PatientContractTest.this, SplashActivity.class);
+                    Intent intent = new Intent(PatientContractTest.this, ResultsActivity.class);
                     intent.putExtra("userID", userID);
+                    intent.putIntegerArrayListExtra("flexedReadings",(ArrayList<Integer>) flexedReading);
+                    intent.putIntegerArrayListExtra("restReadings",(ArrayList<Integer>) restReadings );
                     startActivity(intent);
                 }
                 else{
@@ -168,7 +170,7 @@ private void startBluetoothTask() {
                 Log.d("MainActivity", "Readings: " + readings.toString());
                 flexedReading=readings;
                 if(readings.size()!=0) {
-                    firebaseHelper.createReading(readings,restReadings,  new FirebaseHelper.voidCallbackInterface() {
+                    /*firebaseHelper.createReading(readings,restReadings,  new FirebaseHelper.voidCallbackInterface() {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(PatientContractTest.this, "Readings Created Successfully", Toast.LENGTH_SHORT).show();
@@ -177,7 +179,7 @@ private void startBluetoothTask() {
                         public void onFail(Exception e) {
                             Toast.makeText(PatientContractTest.this, "Reading Creation Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }, userID);
+                    }, userID);*/
                     ready=true;
                     end_test.setVisibility(View.VISIBLE);
                 }else{
