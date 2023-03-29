@@ -5,5 +5,20 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminate">false</item>
+        <item name="android:progressDrawable">@drawable/custom_progress_drawable</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:maxHeight">30dp</item>
+        <item name="android:max">5000</item>
+    </style>
+
+    <color name="progress_start_color">#D6D1E7</color>
+    <color name="progress_end_color">#8C89C2</color>
+    <color name="progress_background_color">#E0E0E0</color>
+
+    <color name="text_color">#000000</color>
+
+    <color name="indicator_color">#FF0000</color>
 
 </resources>

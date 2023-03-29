@@ -38,6 +38,8 @@ public class PatientRestTest extends BluetoothReadingsActivity {
 
     List<Integer> restReadings;
 
+    private SemiCircleProgressBar semiCircleProgressBar;
+
 
     boolean ready= false;
     @Override
@@ -71,11 +73,13 @@ public class PatientRestTest extends BluetoothReadingsActivity {
             startActivity(intent);
         }
         progressBar=findViewById(R.id.determinateBarRest);
+        semiCircleProgressBar = findViewById(R.id.semiCircleProgressBar);
         Start_test = findViewById(R.id.btn_StartRest);
         Redo = findViewById(R.id.btn_redo);
         next_test = findViewById(R.id.btn_Contracting);
 
         progressBar.setProgress(0);
+        semiCircleProgressBar.setProgress(0);
 
         Start_test.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +146,7 @@ public class PatientRestTest extends BluetoothReadingsActivity {
         // Assuming you have the Bluetooth device address
         String deviceAddress = selectedDevice.getAddress(); // Replace with the actual Bluetooth device address
 
-        BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
+        BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar,semiCircleProgressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
 
             @Override
             public void onReadingsReceived(List<Integer> readings) {
