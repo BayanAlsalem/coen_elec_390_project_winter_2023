@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -148,9 +149,31 @@ public class ResultsActivity extends AppCompatActivity {
         readingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(ResultsActivity.this, PatientInstructionsActivity.class);
+                Intent intent= new Intent(ResultsActivity.this, BluetoothConnectionActivity.class);
                 intent.putExtra("userID",userID);
                 startActivity(intent);
+            }
+        });
+
+        Button saveButton = (Button) findViewById(R.id.save_reading_button);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Save Button Pressed");
+                firebaseHelper.createReading(flexedReading,restReading,  new FirebaseHelper.voidCallbackInterface() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(ResultsActivity.this, "Readings Created Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent(ResultsActivity.this, SplashActivity.class);
+                        startActivity(intent);
+                    }
+                    @Override
+                    public void onFail(Exception e) {
+                        Toast.makeText(ResultsActivity.this, "Reading Creation Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, userID);
+
             }
         });
 
@@ -196,7 +219,7 @@ public class ResultsActivity extends AppCompatActivity {
     public List<DataEntry> listToEntry(List<Integer> reading1, List<Integer> reading2){
         List<DataEntry> data = new ArrayList<>();
         for(int i=0;i<reading1.size();i++){
-            data.add(new CustomDataEntry(i*150, reading1.get(i), reading2.get(i)));
+            data.add(new CustomDataEntry(i*100, reading1.get(i), reading2.get(i)));
         }
 
         return data;

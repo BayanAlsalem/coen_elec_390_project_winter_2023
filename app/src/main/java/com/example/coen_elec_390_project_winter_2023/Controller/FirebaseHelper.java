@@ -174,11 +174,13 @@ public class FirebaseHelper {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
                                         Log.d("Readings", "DocumentSnapshot written with ID: " + documentReference.getId());
+                                        callback.onSuccess();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Log.w("Readings", "Error adding document", e);
+                                        callback.onFail(e);
                                     }
                                 });
                         System.out.println("TEST SUCCESSSSS a bit!!!!!");
