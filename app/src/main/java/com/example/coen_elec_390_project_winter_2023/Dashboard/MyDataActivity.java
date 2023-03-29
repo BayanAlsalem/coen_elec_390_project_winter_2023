@@ -44,8 +44,10 @@ public class MyDataActivity extends AppCompatActivity {
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     // lists
-    List<DataEntry> data = new ArrayList<>();
+    List<DataEntry> flexedValuesData = new ArrayList<>();
     List<Reading> listTest = new ArrayList<Reading>();
+    List<DataEntry> restedValuesData = new ArrayList<>();
+
 
     // graph variables
     static Cartesian line;
@@ -101,7 +103,7 @@ public class MyDataActivity extends AppCompatActivity {
         checkData();
         System.out.println("after check "+hasData);
 
-        if(hasData) {
+        if(!hasData) {
             updateSpinner();
             updateGraph();
 
@@ -177,7 +179,7 @@ public class MyDataActivity extends AppCompatActivity {
     public List<DataEntry> listToEntry(List<Integer> reading){
         List<DataEntry> data = new ArrayList<>();
         for(int i=0;i<reading.size();i++){
-            data.add(new ValueDataEntry((i*150), reading.get(i)));
+            data.add(new ValueDataEntry((i*100), reading.get(i)));
         }
 
         return data;
@@ -201,6 +203,27 @@ public class MyDataActivity extends AppCompatActivity {
                         return o2.getReadingDate().compareTo(o1.getReadingDate());
                     }
                 });
+
+                // Change the date format to December 02, 2020 00:00 PM from Wed Dec 02 00:00:00 EDT 2020
+//                for (int i = 0; i < listTest.size(); i++) {
+//                    String date = listTest.get(i).getReadingDate().toString();
+//                    String[] dateArray = date.split(" ");
+//                    String month = dateArray[1];
+//                    String day = dateArray[2];
+//                    String year = dateArray[5];
+//                    String time = dateArray[3];
+//                    String[] timeArray = time.split(":");
+//                    String hour = timeArray[0];
+//                    String minute = timeArray[1];
+//                    String ampm = "AM";
+//                    if (Integer.parseInt(hour) > 12) {
+//                        hour = String.valueOf(Integer.parseInt(hour) - 12);
+//                        ampm = "PM";
+//                    }
+//                    String newDate = month + " " + day + ", " + year + " " + hour + ":" + minute + " " + ampm;
+//                    spinnerArray.add(newDate);
+//
+//                }
 
 
                 for (int i = 0; i < listTest.size(); i++) {
@@ -249,28 +272,33 @@ public class MyDataActivity extends AppCompatActivity {
                 Log.d("Readings","Date: "+ selectedDate);
 
                 // Clear the existing data
-                data.clear();
+                flexedValuesData.clear();
+                restedValuesData.clear();
 
                 // Loop through the readings and add the data for the selected date to the chart
                 List<Integer> flexedValues = new ArrayList<Integer>();
+                List<Integer> restedValues = new ArrayList<Integer>();
                 for(int i=0;i<listTest.size();i++){
                     if(listTest.get(i).getReadingDate().toString().equals(selectedDate)){
                         flexedValues = listTest.get(i).getFlexedValues();
+                        restedValues = listTest.get(i).getRestedValues();
                     }
                 }
                 System.out.println("NEW VALUES:" + flexedValues);
 
-                System.out.println("data after being cleared: " + data);
+                System.out.println("data after being cleared: " + flexedValuesData);
 
                 // Convert the flexed values to data entries
-                data = listToEntry(flexedValues);
+                flexedValuesData = listToEntry(flexedValues);
+                restedValuesData = listToEntry(restedValues);
 
-                System.out.println("data after being converted: " + data);
+
+                System.out.println("data after being converted: " + flexedValuesData);
 
 
                 // chart config
                 line.xAxis(0)
-                        .title("Time [s]")
+                        .title("Time [ms]")
                         .stroke("#000000 3")
                         .labels().fontSize(16).fontColor("#8C89C2");
 
@@ -289,8 +317,10 @@ public class MyDataActivity extends AppCompatActivity {
                 line.yAxis(0).title().fontSize(16);
 
 
-                line.title("Flexed Values");
+                line.title("Readings");
                 line.title().fontSize(20).fontColor("#8C89C2");
+
+                line.legend().enabled(true);
 
 
                 //remove data from the chart
@@ -299,7 +329,13 @@ public class MyDataActivity extends AppCompatActivity {
 
                 // Add the data to the chart
                 APIlib.getInstance().setActiveAnyChartView(anyChartView);
-                line.line(data).stroke("3 #8C89C2");
+                line.line(flexedValuesData).stroke("3 #8C89C2").name("Contracted");
+                line.line(restedValuesData).stroke("3 #D6D1E7").name("Rested");
+
+                // name the series
+
+//                line.line(flexedValuesData).name("Contracted");
+//                line.line(restedValuesData).name("Rested");
 
             }
 
