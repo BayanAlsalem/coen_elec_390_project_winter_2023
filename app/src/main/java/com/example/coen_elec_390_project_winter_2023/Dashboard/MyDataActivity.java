@@ -64,7 +64,7 @@ public class MyDataActivity extends AppCompatActivity {
     Button button;
 
 
-    public static boolean hasData = false;
+    public static boolean hasData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,31 +101,6 @@ public class MyDataActivity extends AppCompatActivity {
         });
 
         checkData();
-        System.out.println("after check "+hasData);
-
-        if(!hasData) {
-            updateSpinner();
-            updateGraph();
-
-            // when a different date in the spinner is chosen, update the graph to show the new data on that date
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    updateGraph();
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    updateGraph();
-
-                }
-            });
-        }else {
-            Toast.makeText(MyDataActivity.this, "No data to display", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MyDataActivity.this, SplashActivity.class));
-            finish();
-        }
 
     }//end of onCreate() function
 
@@ -137,12 +112,37 @@ public class MyDataActivity extends AppCompatActivity {
         firebaseHelper.getReadingsNotCurrentUser(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
             public void onSuccess(List<Reading> readingsList) {
-                if(readingsList.size() > 0){
+                if(readingsList.size() != 0){
                     System.out.println("has data");
                     hasData = true;
+
+                    updateSpinner();
+                    updateGraph();
+
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            updateGraph();
+                            hasData = false;
+
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+
                 }else{
                     System.out.println("no data");
                     hasData = false;
+
+                    Toast.makeText(MyDataActivity.this, "No data to display", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MyDataActivity.this, SplashActivity.class));
+                    finish();
+
                 }
             }
 
@@ -152,6 +152,8 @@ public class MyDataActivity extends AppCompatActivity {
                 hasData = false;
             }
         });
+
+        System.out.println("checking data.....  "+hasData);
 
     }
 
@@ -224,7 +226,6 @@ public class MyDataActivity extends AppCompatActivity {
 //                    spinnerArray.add(newDate);
 //
 //                }
-
 
                 for (int i = 0; i < listTest.size(); i++) {
                     // add the date to the spinnerArray
