@@ -37,5 +37,10 @@ public abstract class User {
     public userOptions.userType getUserType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 

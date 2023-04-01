@@ -55,6 +55,11 @@
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.DoctorAddPatient">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.ListOfPatientsActivity">
         </activity>
 
