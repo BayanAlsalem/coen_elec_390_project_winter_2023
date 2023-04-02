@@ -4,15 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Models.Patient;
+import com.example.coen_elec_390_project_winter_2023.Models.User;
 import com.example.coen_elec_390_project_winter_2023.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,9 +28,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class ListOfPatientsActivity extends AppCompatActivity{
+public class ListOfPatientsActivity extends AppCompatActivity {
     private ListView patientListView;
-    private ArrayList<String> patientList = new ArrayList<>();
+    private ArrayList<User> patientList = new ArrayList<>();
+    private ArrayList<String> patientListNames = new ArrayList<>();
     private ArrayAdapter<String> patientAdapter;
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
@@ -47,12 +54,32 @@ public class ListOfPatientsActivity extends AppCompatActivity{
                         Log.d("firebase", "The user type for user " + userId + " is: " + userType);
                         // if user is a patient, add their name to the patientList
                         if (userType.equals("PATIENT")) {
-                            patientList.add(document.getString("name").toString());
+                            patientListNames.add(document.getString("name").toString());
+                            //create a new user object and add it to the patientList
+                            User user = new Patient(document.getString("name").toString(), document.getString("email").toString(), document.getString("password").toString(), document.getString("uid").toString());
+                            patientList.add(user);
+
                         }
                     }
 
                     System.out.println(patientList);
-                    patientAdapter = new ArrayAdapter<String>(ListOfPatientsActivity.this, android.R.layout.simple_list_item_1, patientList);
+                    patientAdapter = new ArrayAdapter<String>(ListOfPatientsActivity.this, R.layout.patient_list_item, R.id.patientNameTextView, patientListNames) {
+                        @NonNull
+                        @Override
+                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                            View view = super.getView(position, convertView, parent);
+
+                            ImageView patientImageView = view.findViewById(R.id.patientImageView);
+                            // Set the image resource for the ImageView
+                            patientImageView.setImageResource(R.drawable.user);
+
+                            TextView patientNameTextView = view.findViewById(R.id.patientNameTextView);
+                            // Set the text for the TextView
+                            patientNameTextView.setText(patientListNames.get(position));
+
+                            return view;
+                        }
+                    };
                     patientListView.setAdapter(patientAdapter);
 
                 } else {
@@ -66,21 +93,16 @@ public class ListOfPatientsActivity extends AppCompatActivity{
         patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(ListOfPatientsActivity.this, patientList.get(i), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListOfPatientsActivity.this, "You clicked on " + patientList.get(i).getName(), Toast.LENGTH_SHORT).show();
                 // intent to open patient's profile and send the patient's name through intent
-                Intent intent = new Intent(ListOfPatientsActivity.this, PatientProfileActivity.class);
-                intent.putExtra("patientName", patientList.get(i));
+                Intent intent = new Intent(ListOfPatientsActivity.this, MyDataActivity.class);
+                intent.putExtra("patientName", patientList.get(i).getName());
+                intent.putExtra("patientEmail", patientList.get(i).getEmail());
+                intent.putExtra("patientPassword", patientList.get(i).getPassword());
+                intent.putExtra("patientUserType", patientList.get(i).getUserType());
+                intent.putExtra("patientId", patientList.get(i).getUid());
                 startActivity(intent);
-
-
-
             }
         });
-
-
-
-        }
-
-}//end of ListOfPatientsActivity{} class
-
-
+    }
+}
