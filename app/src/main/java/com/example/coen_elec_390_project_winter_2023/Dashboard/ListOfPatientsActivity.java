@@ -97,8 +97,6 @@ public class ListOfPatientsActivity extends AppCompatActivity {
                 // intent to open patient's profile and send the patient's name through intent
                 Intent intent = new Intent(ListOfPatientsActivity.this, MyDataActivity.class);
                 intent.putExtra("patientName", patientList.get(i).getName());
-                intent.putExtra("patientEmail", patientList.get(i).getEmail());
-                intent.putExtra("patientPassword", patientList.get(i).getPassword());
                 intent.putExtra("patientUserType", patientList.get(i).getUserType());
                 intent.putExtra("patientId", patientList.get(i).getUid());
                 startActivity(intent);
