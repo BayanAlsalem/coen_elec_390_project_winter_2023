@@ -23,7 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class FirebaseHelper {
@@ -128,7 +130,7 @@ public class FirebaseHelper {
     }
 
     public void createUser(User user, voidCallbackInterface callback) {
-        auth().createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+        auth().createUserWithEmailAndPassword(user.getAge(), user.getExperience())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -153,6 +155,52 @@ public class FirebaseHelper {
                         } else {
                             System.out.println(task.getException().getMessage());
                             //Couldn't create auth for user
+                            callback.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void updateDoctorInfo(String fullName, String hospitalName, String age, String experience, voidCallbackInterface callback) {
+        String uid = getCurrentUserId();
+        Map<String, Object> m = new HashMap<>();
+        m.put("name", fullName);
+        m.put("hospital", hospitalName);
+        m.put("age", age);
+        m.put("experience", experience);
+        db().collection(DB_USERS_COLLECTION).document(uid)
+                .update(m)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.onSuccess();
+                        } else {
+                            //Couldn't update doctor
+                            callback.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void updatePatientInfo(String fullName, String age, String city, String country, String doctorName, voidCallbackInterface callback) {
+        String uid = getCurrentUserId();
+        Map<String, Object> m = new HashMap<>();
+        m.put("name", fullName);
+        m.put("age", age);
+        m.put("city", city);
+        m.put("country", country);
+        m.put("doctorName", doctorName);
+
+        db().collection(DB_USERS_COLLECTION).document(uid)
+                .update(m)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.onSuccess();
+                        } else {
+                            //Couldn't update doctor
                             callback.onFail(task.getException());
                         }
                     }
