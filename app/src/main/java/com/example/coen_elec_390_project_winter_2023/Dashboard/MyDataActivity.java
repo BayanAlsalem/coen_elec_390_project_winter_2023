@@ -76,6 +76,7 @@ public class MyDataActivity extends AppCompatActivity {
 
         line = AnyChart.line();
         anyChartView.setChart(line);
+        //
 
         //get intent from previous activity
         String userID = getIntent().getStringExtra("patientId");
