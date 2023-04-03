@@ -23,7 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class FirebaseHelper {
@@ -128,7 +130,7 @@ public class FirebaseHelper {
     }
 
     public void createUser(User user, voidCallbackInterface callback) {
-        auth().createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
+        auth().createUserWithEmailAndPassword(user.getAge(), user.getExperience())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -153,6 +155,52 @@ public class FirebaseHelper {
                         } else {
                             System.out.println(task.getException().getMessage());
                             //Couldn't create auth for user
+                            callback.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void updateDoctorInfo(String fullName, String hospitalName, String age, String experience, voidCallbackInterface callback) {
+        String uid = getCurrentUserId();
+        Map<String, Object> m = new HashMap<>();
+        m.put("name", fullName);
+        m.put("hospital", hospitalName);
+        m.put("age", age);
+        m.put("experience", experience);
+        db().collection(DB_USERS_COLLECTION).document(uid)
+                .update(m)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.onSuccess();
+                        } else {
+                            //Couldn't update doctor
+                            callback.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void updatePatientInfo(String fullName, String age, String city, String country, String doctorName, voidCallbackInterface callback) {
+        String uid = getCurrentUserId();
+        Map<String, Object> m = new HashMap<>();
+        m.put("name", fullName);
+        m.put("age", age);
+        m.put("city", city);
+        m.put("country", country);
+        m.put("doctorName", doctorName);
+
+        db().collection(DB_USERS_COLLECTION).document(uid)
+                .update(m)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.onSuccess();
+                        } else {
+                            //Couldn't update doctor
                             callback.onFail(task.getException());
                         }
                     }
@@ -203,7 +251,6 @@ public class FirebaseHelper {
         getCurrentUser(new getUserCallbackInterface() {
             public void onSuccess(User user) {
                 if (user.getUserType() == userOptions.userType.PATIENT) {
-
                     {
                         if (user.getUid().equals(userID)) {
                             db().collection(DB_USERS_COLLECTION).document(user.getUid()).collection(DB_READINGS_COLLECTION).get()
@@ -227,13 +274,49 @@ public class FirebaseHelper {
                         }
                     }
                 }
+                else
+                {
+                    Log.d("Readings","NOT A PATIENT");
+                }
             }
             @Override
             public void onFail(Exception e) {
                 Log.d("Readings","GETING READINGS FAILED");
             }
         });
-        //Log.d("Readings","ReadingsList: "+readingsList.toString());
+//        Log.d("Readings","ReadingsList: "+readingsList.toString());
+        return readingsList;
+    }
+
+    public List<Reading> getReadingsNotCurrentUser(String userID, getReadingsListCallbackInterface callback){
+        List<Reading> readingsList= new ArrayList<>();
+        getCurrentUser(new getUserCallbackInterface() {
+            public void onSuccess(User user) {
+                            db().collection(DB_USERS_COLLECTION).document(userID).collection(DB_READINGS_COLLECTION).get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    //Log.d("Readings", document.getId() + " => " + document.getData());
+                                                    Reading temp = document.toObject(Reading.class);
+                                                    //Log.d("Readings","TEMP VARIABLE"+temp.toString());
+                                                    readingsList.add(temp);
+                                                }
+                                                callback.onSuccess(readingsList);
+                                            } else {
+                                                Log.d("Readings", "Error getting documents: ", task.getException());
+                                                callback.onFail(task.getException());
+                                            }
+                                        }
+                                    });
+            }
+            @Override
+            public void onFail(Exception e) {
+                Log.d("Readings","GETING READINGS FAILED");
+            }
+        });
+//        Log.d("Readings","ReadingsList: "+readingsList.toString());
         return readingsList;
     }
 

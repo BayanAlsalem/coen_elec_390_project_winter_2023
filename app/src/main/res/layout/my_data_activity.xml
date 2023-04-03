@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Dashboard.PatientDashboard">
+
+    <com.anychart.AnyChartView
+        android:id="@+id/my_data_chart1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/request_appointmentId"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        android:text="Request Appointment"
+        android:textSize="5.5pt"
+        android:backgroundTint="@color/dark_purble"
+        >
+
+    </Button>
+
+    <Spinner
+        android:id="@+id/spinnerId"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:spinnerMode="dropdown"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        ></Spinner>
+
+
+</FrameLayout>

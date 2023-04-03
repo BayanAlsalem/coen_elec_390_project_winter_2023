@@ -76,23 +76,30 @@ public class PatientDashboard extends AppCompatActivity {
             }
         });
 //
-//        // Set click listeners for myData
-//        TextView myDataText = findViewById(R.id.myDataTextID);
-//        ImageView myDataImage = findViewById(R.id.myDataImageID);
-//        myDataText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(PatientDashboard.this, listOfGraphs.class);
-//                startActivity(intent);
-//            }
-//        });
-//        myDataImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(PatientDashboard.this, listOfGraphs.class);
-//                startActivity(intent);
-//            }
-//        });
+        // Set click listeners for myData
+        TextView myDataText = findViewById(R.id.myDataTextID);
+        ImageView myDataImage = findViewById(R.id.myDataImageID);
+        myDataText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // send patient id to myDataActivity using intent extras
+                String patientID = firebaseHelper.getCurrentUserId();
+                System.out.println("Patient ID: " + patientID);
+                Intent intent = new Intent(PatientDashboard.this, MyDataActivity.class);
+                intent.putExtra("patientId", patientID);
+                startActivity(intent);
+            }
+        });
+        myDataImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String patientID = firebaseHelper.getCurrentUserId();
+                System.out.println("Patient ID: " + patientID);
+                Intent intent = new Intent(PatientDashboard.this, MyDataActivity.class);
+                intent.putExtra("patientId", patientID);
+                startActivity(intent);
+            }
+        });
 
 
 

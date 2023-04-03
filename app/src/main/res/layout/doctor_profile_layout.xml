@@ -87,23 +87,22 @@
             android:textColor="@color/black" />
 
         <EditText
-            android:id="@+id/emailSignUpID"
+            android:id="@+id/ageDoctorProfileID"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:drawablePadding="8dp"
-            android:hint="Email"
+            android:hint="Age"
             android:padding="8dp"
             android:textColor="@color/black" />
 
         <EditText
-            android:id="@+id/passwordSignupID"
+            android:id="@+id/experienceDoctorProfileID"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:drawablePadding="8dp"
-            android:hint="Password"
-            android:inputType="textPassword"
+            android:hint="Years of Experience"
             android:padding="8dp"
             android:textColor="@color/black" />
 

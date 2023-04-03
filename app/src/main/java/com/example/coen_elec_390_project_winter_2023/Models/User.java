@@ -4,8 +4,11 @@ public abstract class User {
     public String uid;
     public String hospital;
     public String name;
-    public String email;
-    public String password;
+    public String age;
+    public String experience;
+    public String city;
+    public String country;
+    public String doctorName;
     public userOptions.userType type;
 
     public String getUid() {
@@ -22,20 +25,46 @@ public abstract class User {
     public void setName(String name) {
         this.name = name;
     }
-    public String getEmail() {
-        return email;
+    public String getAge() {
+        return age;
     }
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAge(String age) {
+        this.age = age;
     }
-    public String getPassword() {
-        return password;
+    public String getExperience() {
+        return experience;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
+    public void setCity(){
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
     public userOptions.userType getUserType() {
         return type;
     }
+
+
 }
 
