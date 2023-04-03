@@ -12,8 +12,8 @@ public class Doctor extends User {
     public Doctor(String name,String hospital, String email, String password, String uid, List<String> patientsList) {
         this.name = name;
         this.hospital = hospital;
-        this.email = email;
-        this.password = password;
+        this.age = email;
+        this.experience = password;
         this.uid = uid;
         this.type = userOptions.userType.DOCTOR;
         this.patientsList = patientsList;
@@ -22,4 +22,6 @@ public class Doctor extends User {
     public List<String> getPatientsList() {
         return patientsList;
     }
+
+
 }

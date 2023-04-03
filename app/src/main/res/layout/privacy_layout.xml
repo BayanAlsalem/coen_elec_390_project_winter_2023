@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="136dp"
+        android:layout_width="152dp"
         android:layout_height="156dp"
         android:layout_gravity="center"
         android:background="@drawable/privacy">
@@ -15,12 +15,14 @@
     <TextView
         android:id="@+id/title"
         android:text="FLEX Android App Data Handling and Terms of Use/Privacy Policy"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:textColor="@color/dark_purble"/>
 
     <ScrollView
@@ -36,7 +38,8 @@
             android:layout_height="match_parent"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="8dp"
+            android:layout_margin="8dp"/>
     </ScrollView>
 
     <Button
