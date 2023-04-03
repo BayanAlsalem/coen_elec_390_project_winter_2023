@@ -9,15 +9,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="top"
-    android:background="#5CE1E6"
+    android:background="#FFFFFFFF"
     tools:context=".Dashboard.PatientRestTest">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_weight="2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,8 +46,8 @@
                 android:paddingBottom="30dp"/>
 
             <LinearLayout
-                android:layout_width="307dp"
-                android:layout_height="279dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
 
@@ -54,28 +62,49 @@
                     android:textSize="25sp"
                     android:textStyle="bold" />
 
+                <com.example.coen_elec_390_project_winter_2023.Dashboard.SemiCircleProgressBar
+                    android:id="@+id/semiCircleProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_margin="16dp" />
+
+
                 <ProgressBar
                     android:id="@+id/determinateBarRest"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:progress="25"/>
+                    android:progress="25"
+                    />
 
 
             </LinearLayout>
 
-            <LinearLayout
+
+
+        </LinearLayout>
+        </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="50dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
 
                 <Button
                     android:id="@+id/btn_StartRest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/black"
+                    android:backgroundTint="@color/dark_purble"
                     android:text="Start Rest Test " />
 
                 <Button
@@ -83,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/black"
+                    android:backgroundTint="@color/dark_purble"
                     android:text="Next Test"
                     android:visibility="invisible"
                     tools:visibility="visible"/>
@@ -93,16 +122,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/black"
+                    android:backgroundTint="@color/dark_purble"
                     android:text="Redo Test "
                     android:visibility="invisible"
                     tools:visibility="visible"/>
 
-            </LinearLayout>
+                </LinearLayout>
 
-
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
 </LinearLayout>

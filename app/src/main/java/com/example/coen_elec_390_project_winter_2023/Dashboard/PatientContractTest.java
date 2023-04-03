@@ -28,6 +28,8 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+
 public class PatientContractTest extends BluetoothReadingsActivity{
 
     private static final long START_TIME_IN_SECONDS = 30000;
@@ -40,6 +42,7 @@ public class PatientContractTest extends BluetoothReadingsActivity{
     String userID;
 
     List<Integer> flexedReading;
+    private SemiCircleProgressBar semiCircleProgressBar;
 
 
     boolean ready= false;
@@ -66,8 +69,9 @@ public class PatientContractTest extends BluetoothReadingsActivity{
         Start_Flex = findViewById(R.id.btn_StartFlex);
         Redo2 = findViewById(R.id.btn_redo2);
         end_test = findViewById(R.id.btn_end);
+        semiCircleProgressBar = findViewById(R.id.semiCircleProgressBarFlexed);
         //CountdownContract = findViewById(R.id.text_view_countdown2);
-
+        semiCircleProgressBar.setProgress(0);
         progressBar.setProgress(0);
         Start_Flex.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +114,7 @@ public class PatientContractTest extends BluetoothReadingsActivity{
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    startBluetoothTask();
+                   startBluetoothTask();
 
                 }
 
@@ -124,8 +128,10 @@ public class PatientContractTest extends BluetoothReadingsActivity{
             @Override
             public void onClick(View view) {
                 if(ready) {
-                    Intent intent = new Intent(PatientContractTest.this, SplashActivity.class);
+                    Intent intent = new Intent(PatientContractTest.this, ResultsActivity.class);
                     intent.putExtra("userID", userID);
+                    intent.putIntegerArrayListExtra("flexedReadings",(ArrayList<Integer>) flexedReading);
+                    intent.putIntegerArrayListExtra("restReadings",(ArrayList<Integer>) restReadings );
                     startActivity(intent);
                 }
                 else{
@@ -159,7 +165,7 @@ private void startBluetoothTask() {
     // Assuming you have the Bluetooth device address
     String deviceAddress = selectedDevice.getAddress(); // Replace with the actual Bluetooth device address
 
-    BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
+    BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar,semiCircleProgressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
 
         @Override
         public void onReadingsReceived(List<Integer> readings) {

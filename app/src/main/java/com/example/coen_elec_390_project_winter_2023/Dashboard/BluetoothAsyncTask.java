@@ -4,6 +4,7 @@ import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,6 +29,8 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
     private final ProgressBar progressBar;
     private final OnReadingsReceivedListener onReadingsReceivedListener;
 
+    private final SemiCircleProgressBar semiCircleProgressBar;
+
     InputStream inStream;
 
     OutputStream outStream;
@@ -36,11 +39,12 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
 
     private List<Integer> readings;
 
-    public BluetoothAsyncTask(String deviceAddress, Handler handler, ProgressBar progressBar, OnReadingsReceivedListener onReadingsReceivedListener) {
+    public BluetoothAsyncTask(String deviceAddress, Handler handler, ProgressBar progressBar,SemiCircleProgressBar semiCircleProgressBar, OnReadingsReceivedListener onReadingsReceivedListener) {
         this.deviceAddress = deviceAddress;
         this.handler = handler;
         this.progressBar = progressBar;
         this.onReadingsReceivedListener = onReadingsReceivedListener;
+        this.semiCircleProgressBar = semiCircleProgressBar;
         readings = new ArrayList<>();
     }
 
@@ -112,17 +116,18 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
                 String fullReading="";
                 try {
                     while (!isCancelled()) {
-                        String readingStr = "";
-                        int incomingChar;
-                        while ((incomingChar = inStream.read()) != -1 && incomingChar != '\n') {
-                            readingStr += (char) incomingChar;
-                        }
-                        readingStr=readingStr.trim();
-                        System.out.println(readingStr);
-                        if ("DONE".equals(readingStr)) {
-                            System.out.println("GOT DONE");
-                            break;
-                        }
+
+                            String readingStr = "";
+                            int incomingChar;
+                            while ((incomingChar = inStream.read()) != -1 && incomingChar != '\n') {
+                                readingStr += (char) incomingChar;
+                            }
+                            readingStr = readingStr.trim();
+                            System.out.println(readingStr);
+                            if ("DONE".equals(readingStr)) {
+                                System.out.println("GOT DONE");
+                                break;
+                            }
                             /*String[] array = readingStr.split("");
                             fullReading+= readingStr;
                             fullReading+=',';*/
@@ -133,11 +138,16 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
                             readings.add(reading);
 
 
+                            // Update progress bar
+                            handler.post(() -> progressBar.setProgress(0));
+                            handler.post(() -> progressBar.setMax(100));
+                            handler.post(() -> progressBar.setProgress((readings.size() / 3)));
 
-                        // Update progress bar
-                        handler.post(() -> progressBar.setProgress(0));
-                        handler.post(() -> progressBar.setMax(100));
-                        handler.post(() -> progressBar.setProgress((readings.size()/3)));
+                            // handler.post(() -> semiCircleProgressBar.setProgress(0));
+                            // handler.post(() -> semiCircleProgressBar.setMax(100));
+                            int finalReading = reading;
+                            handler.post(() -> semiCircleProgressBar.setProgress(finalReading));
+
                     }
                     System.out.println(fullReading);
                 } catch (IOException e) {
@@ -169,6 +179,10 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
             progressBar.setProgress(0);
             progressBar.setMax(100);
             progressBar.setProgress(progress);// Update the ProgressBar
+
+          //  semiCircleProgressBar.setProgress(0);
+           // semiCircleProgressBar.setMax(100);
+            semiCircleProgressBar.setProgress(lastReading);// Update the ProgressBar
 
             // You can also display the progress percentage using a TextView or other UI element, if needed
         }
