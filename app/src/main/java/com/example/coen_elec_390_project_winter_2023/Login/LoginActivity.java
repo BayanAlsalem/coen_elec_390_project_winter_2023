@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, PatientDashboard.class);
                         intent.putExtra("userID",user.getUid());
                         intent.putExtra("userName",user.getName());
-                        intent.putExtra("userEmail",user.getAge());
+                        intent.putExtra("userEmail",user.getEmail());
                         startActivity(intent);
                     } else if (user.getUserType() == userOptions.userType.DOCTOR){
                         //To Do: we need to pass user object to either dashboards (eg: putExtra)

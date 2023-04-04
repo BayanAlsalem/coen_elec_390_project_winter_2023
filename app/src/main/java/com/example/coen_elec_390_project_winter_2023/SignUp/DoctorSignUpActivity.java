@@ -15,6 +15,9 @@ import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
 import com.example.coen_elec_390_project_winter_2023.Models.Doctor;
 import com.example.coen_elec_390_project_winter_2023.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DoctorSignUpActivity extends AppCompatActivity {
 
     FirebaseHelper firebaseHelper = new FirebaseHelper();
@@ -52,7 +55,8 @@ public class DoctorSignUpActivity extends AppCompatActivity {
                     doctorPasswordSignup.setError("Please provide a password to continue registration! ");
                 } else{
                     //Firebase integration to create a user
-                    Doctor doctor = new Doctor(name, hospital,user, pass, null);
+                    List<String> patientsList = new ArrayList<>(); //Empty patients list
+                    Doctor doctor = new Doctor(name, hospital,user, pass, null, patientsList);
                     firebaseHelper.createUser(doctor, new FirebaseHelper.voidCallbackInterface() {
                         @Override
                         public void onSuccess() {

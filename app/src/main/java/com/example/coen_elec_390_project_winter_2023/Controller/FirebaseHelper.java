@@ -44,6 +44,12 @@ public class FirebaseHelper {
         void onFail(Exception e);
     }
 
+    public interface getUsersCallbackInterface {
+        void onSuccess(List<User> users);
+
+        void onFail(Exception e);
+    }
+
     public interface getReadingsListCallbackInterface {
         void onSuccess(List<Reading> readingsList);
 
@@ -130,7 +136,7 @@ public class FirebaseHelper {
     }
 
     public void createUser(User user, voidCallbackInterface callback) {
-        auth().createUserWithEmailAndPassword(user.getAge(), user.getExperience())
+        auth().createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -155,6 +161,46 @@ public class FirebaseHelper {
                         } else {
                             System.out.println(task.getException().getMessage());
                             //Couldn't create auth for user
+                            callback.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void loadAllPatients(getUsersCallbackInterface callback){
+        List<User> users = new ArrayList<>();
+        db().collection(DB_USERS_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                User temp = document.toObject(Patient.class);
+
+                                if(temp.getUserType() == userOptions.userType.PATIENT){
+                                    users.add(temp);
+                                }
+                            }
+                            callback.onSuccess(users);
+                        } else {
+                            callback.onFail(task.getException());
+                        }
+                    }
+                });
+    }
+    public void updateDoctorPatientsList(List<String> patientsList, voidCallbackInterface callback) {
+        String uid = getCurrentUserId();
+        db().collection(DB_USERS_COLLECTION).document(uid)
+                .update("patientsList", patientsList)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("API", "Doctor ID: " + uid + " updated patients to " + patientsList);
+                            callback.onSuccess();
+                        } else {
+                            //Couldn't update doctor
                             callback.onFail(task.getException());
                         }
                     }

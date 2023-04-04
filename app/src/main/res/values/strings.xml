@@ -34,4 +34,34 @@ Users can request to access, modify or delete their data by contacting FLEX supp
 
 By using the FLEX Android App, you agree to the above terms and conditions.
 </string>
+
+    //Headings
+    <string name="step0Heading">What Will You Need</string>
+    <string name="step1Heading">1. Be Comfortable</string>
+    <string name="step2Heading">2. Clean the Skin</string>
+    <string name="step3Heading">3. Electrodes Setup</string>
+    <string name="step4Heading">4. Apply your Electrodes</string>
+    <string name="step5Heading">5.Plug in the module</string>
+
+
+    //Description
+
+    //list slide
+    <string name="step0_description">A place to sit or lay down \n Sanitizing Wipes \n Your FLEX Sensor!</string>
+
+    //Step1 slide
+    <string name="step1_description">Sit or lay down depending on \n which muscle you\'re performing \n the test</string>
+
+    //Step2 slide
+    <string name="step2_description">Using a sanitizing wipe, clean the skin where the electrodes will be placed</string>
+
+    //Step3 slide
+    <string name="step3_description">Place the surface pad into the attatchment that is connected to a cable</string>
+
+    //Step4 slide
+    <string name="step4_description">1. Apply the red lead on bony body part :wrists, knee, ankle, elbow \n 2. Apply the green and yellow leads next to each other on the muscle of testing</string>
+
+    //Step5 slide
+    <string name="step5_description">"Make sure to plug in the gray cable to the module to make sure your readings are taken correctly </string>
+
 </resources>

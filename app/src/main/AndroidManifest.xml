@@ -55,6 +55,11 @@
 
         <activity
             android:parentActivityName=".Dashboard.SplashActivity"
+            android:name=".Dashboard.DoctorAddPatient">
+        </activity>
+
+        <activity
+            android:parentActivityName=".Dashboard.SplashActivity"
             android:name=".Dashboard.ListOfPatientsActivity">
         </activity>
 
@@ -97,26 +102,6 @@
 
         <activity
             android:name=".Dashboard.PatientInstructionsActivity"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-        <activity
-            android:name=".Dashboard.PatientInstructionsStep1"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-        <activity
-            android:name=".Dashboard.PatientInstructionsStep2"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-        <activity
-            android:name=".Dashboard.PatientInstructionsStep3"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-        <activity
-            android:name=".Dashboard.PatientInstructionsStep4"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-        <activity
-            android:name=".Dashboard.PatientInstructionsStep5"
             android:parentActivityName=".Dashboard.PatientDashboard" >
         </activity>
 
