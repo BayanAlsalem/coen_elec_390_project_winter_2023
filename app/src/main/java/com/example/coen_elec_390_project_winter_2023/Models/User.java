@@ -65,6 +65,9 @@ public abstract class User {
         return type;
     }
 
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 

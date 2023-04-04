@@ -12,7 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Login.LoginActivity;
+import com.example.coen_elec_390_project_winter_2023.Models.Doctor;
+import com.example.coen_elec_390_project_winter_2023.Models.User;
 import com.example.coen_elec_390_project_winter_2023.R;
+
+import java.util.ArrayList;
 
 public class DoctorDashboard extends AppCompatActivity {
     FirebaseHelper firebaseHelper = new FirebaseHelper();
@@ -59,23 +64,22 @@ public class DoctorDashboard extends AppCompatActivity {
             }
         });
 
-//        // Set click listeners for addPatient
-//        TextView addPatientText = findViewById(R.id.addPatientTextID);
-//        ImageView addPatientImage = findViewById(R.id.addPatientImageID);
-//        addPatientText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(DoctorDashboard.this, AddPatient.class);
-//                startActivity(intent);
-//            }
-//        });
-//        addPatientImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(DoctorDashboard.this, AddPatient.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        // Set click listeners for addPatient
+        View.OnClickListener addPatientClk = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DoctorDashboard.this, DoctorAddPatient.class);
+                startActivity(intent);
+            }
+        };
+
+        TextView addPatientText = findViewById(R.id.addPatientTextID);
+        ImageView addPatientImage = findViewById(R.id.addPatientImageID);
+
+        addPatientText.setOnClickListener(addPatientClk);
+        addPatientImage.setOnClickListener(addPatientClk);
+
 
         // Set click listeners for requestAppointment
         TextView requestAppointmentText = findViewById(R.id.requestAppointmentTextID);
