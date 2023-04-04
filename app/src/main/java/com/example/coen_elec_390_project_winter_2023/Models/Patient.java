@@ -7,8 +7,8 @@ public class Patient extends User {
 
     public Patient(String name, String email, String password, String uid) {
         this.name = name;
-        this.age = email;
-        this.experience = password;
+        this.email = email;
+        this.password = password;
         this.uid = uid;
         this.type = userOptions.userType.PATIENT;
     }

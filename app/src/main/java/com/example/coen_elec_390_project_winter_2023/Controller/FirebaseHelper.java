@@ -136,7 +136,7 @@ public class FirebaseHelper {
     }
 
     public void createUser(User user, voidCallbackInterface callback) {
-        auth().createUserWithEmailAndPassword(user.getAge(), user.getExperience())
+        auth().createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
