@@ -1,6 +1,7 @@
 package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
 import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -9,9 +10,15 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.example.coen_elec_390_project_winter_2023.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,12 +46,19 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
 
     private List<Integer> readings;
 
-    public BluetoothAsyncTask(String deviceAddress, Handler handler, ProgressBar progressBar,SemiCircleProgressBar semiCircleProgressBar, OnReadingsReceivedListener onReadingsReceivedListener) {
+    private static final long TIMEOUT_MS = 5000; // 5 seconds time slice
+    private long timeout;
+    private Handler timeoutHandler;
+
+    private final AppCompatActivity activity;
+
+    public BluetoothAsyncTask(String deviceAddress, Handler handler, ProgressBar progressBar,SemiCircleProgressBar semiCircleProgressBar, OnReadingsReceivedListener onReadingsReceivedListener, AppCompatActivity activity) {
         this.deviceAddress = deviceAddress;
         this.handler = handler;
         this.progressBar = progressBar;
         this.onReadingsReceivedListener = onReadingsReceivedListener;
         this.semiCircleProgressBar = semiCircleProgressBar;
+        this.activity = activity;
         readings = new ArrayList<>();
     }
 
@@ -116,7 +130,7 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
                 String fullReading="";
                 try {
                     while (!isCancelled()) {
-
+                            startTimeout();
                             String readingStr = "";
                             int incomingChar;
                             while ((incomingChar = inStream.read()) != -1 && incomingChar != '\n') {
@@ -162,7 +176,11 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
                 }
 
                 return readings;
-            }
+            }else{
+            Button restartButton = activity.findViewById(R.id.restartButton);
+            restartButton.setVisibility(View.VISIBLE);
+            cancel(true);
+        }
         return readings;
     }
 
@@ -192,6 +210,8 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
     protected void onPostExecute(List<Integer> readings) {
         super.onPostExecute(readings);
         onReadingsReceivedListener.onReadingsReceived(readings);
+        cancelTimeout();
+        cancel(true);
     }
 
     public interface OnReadingsReceivedListener {
@@ -216,5 +236,33 @@ public class BluetoothAsyncTask extends AsyncTask<Void, Integer, List<Integer>> 
         if(btsocket.isConnected())
             return true;
         else return false;
+    }
+    private final Runnable timeoutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!isCancelled()) {
+                // Timeout occurred, handle it here
+                System.out.println("TIMEOUT RANNNN!!!!");
+                Button restartButton = activity.findViewById(R.id.restartButton);
+                restartButton.setVisibility(View.VISIBLE);
+                cancel(true);
+            }
+        }
+    };
+    private void startTimeout() {
+        if (progressBar.getProgress() != 100) {
+            if (timeoutHandler == null) {
+                timeoutHandler = new Handler(Looper.getMainLooper());
+            }
+            timeoutHandler.removeCallbacks(timeoutRunnable);
+            timeout = System.currentTimeMillis() + TIMEOUT_MS;
+            timeoutHandler.postDelayed(timeoutRunnable, TIMEOUT_MS);
+        }
+    }
+
+    public void cancelTimeout(){
+        if(timeoutHandler!=null) {
+            timeoutHandler.removeCallbacks(timeoutRunnable);
+        }
     }
 }
