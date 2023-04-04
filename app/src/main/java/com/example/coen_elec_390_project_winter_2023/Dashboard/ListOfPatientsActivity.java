@@ -50,13 +50,18 @@ public class ListOfPatientsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String userId = document.getId(); // get the user ID
-                        String userType = document.getString("userType"); // get the value of the "userType" key
+                        String userType = document.getString("userType"); // get the value of the "userType" key\
+                        String name = document.getString("name");
+                        String email = document.getString("email");
+                        String password = document.getString("password");
+                        String uid = document.getString("uid");
+
                         Log.d("firebase", "The user type for user " + userId + " is: " + userType);
                         // if user is a patient, add their name to the patientList
-                        if (userType.equals("PATIENT")) {
+                        if (userType.equals("PATIENT")  && name != null && email != null && password != null && uid != null) {
                             patientListNames.add(document.getString("name").toString());
                             //create a new user object and add it to the patientList
-                            User user = new Patient(document.getString("name").toString(), document.getString("email").toString(), document.getString("password").toString(), document.getString("uid").toString());
+                            User user = new Patient(name, email, password, uid);
                             patientList.add(user);
 
                         }
