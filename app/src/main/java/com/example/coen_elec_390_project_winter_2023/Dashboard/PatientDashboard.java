@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 public class PatientDashboard extends AppCompatActivity {
     FirebaseHelper firebaseHelper = new FirebaseHelper();
+
+    int TakeReadings, Instruction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class PatientDashboard extends AppCompatActivity {
         // Set click listeners for editMyProfile
         TextView editMyProfileText = findViewById(R.id.editMyProfileTextID);
         ImageView editMyProfileImage = findViewById(R.id.editMyProfileImageID);
+
         editMyProfileText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,14 +50,22 @@ public class PatientDashboard extends AppCompatActivity {
         takeReadingsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TakeReadings = 1;
+                Instruction = 0;
                 Intent intent = new Intent(PatientDashboard.this, PatientInstructionsActivity.class);
+                intent.putExtra("TakeReadings", TakeReadings);
+                intent.putExtra("Instruction", Instruction);
                 startActivity(intent);
             }
         });
         takeReadingsImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TakeReadings = 1;
+                Instruction = 0;
                 Intent intent = new Intent(PatientDashboard.this, PatientInstructionsActivity.class);
+                intent.putExtra("TakeReadings", TakeReadings);
+                intent.putExtra("Instruction", Instruction);
                 startActivity(intent);
             }
         });
@@ -64,15 +76,25 @@ public class PatientDashboard extends AppCompatActivity {
         instructionsText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Instruction = 1;
+                TakeReadings = 0;
                 Intent intent = new Intent(PatientDashboard.this, PatientInstructionsActivity.class);
+                intent.putExtra("TakeReadings", TakeReadings);
+                intent.putExtra("Instruction", Instruction);
                 startActivity(intent);
+
             }
         });
         instructionsImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Instruction = 1;
+                TakeReadings = 0;
                 Intent intent = new Intent(PatientDashboard.this, PatientInstructionsActivity.class);
+                intent.putExtra("TakeReadings", TakeReadings);
+                intent.putExtra("Instruction", Instruction);
                 startActivity(intent);
+
             }
         });
 //
