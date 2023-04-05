@@ -50,9 +50,24 @@
                 android:padding="8dp"
                 android:hint="Full Name"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"/>
 
-
+            <EditText
+                android:id="@+id/patientAgeID"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:padding="8dp"
+                android:hint="Your Age"
+                android:drawablePadding="8dp"
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/patientEmailSignUpID"
@@ -62,7 +77,10 @@
                 android:padding="8dp"
                 android:hint="Email"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"/>
 
             <EditText
                 android:id="@+id/patientPasswordSignupID"
@@ -74,26 +92,20 @@
                 android:inputType="textPassword"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
                 />
-            <EditText
-                android:id="@+id/patientDocNameID"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:padding="8dp"
-                android:hint="Your Doctor's name"
-                android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+<!--            <EditText-->
+<!--                android:id="@+id/patientDocNameID"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:padding="8dp"-->
+<!--                android:hint="Your Doctor's name"-->
+<!--                android:drawablePadding="8dp"-->
+<!--                android:textColor="@color/black"/>-->
 
-            <EditText
-                android:id="@+id/patientAgeID"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:padding="8dp"
-                android:hint="Your Age"
-                android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
             <Button
                 android:id="@+id/signupBtnFromPatientSignupLayout"
                 android:layout_width="match_parent"

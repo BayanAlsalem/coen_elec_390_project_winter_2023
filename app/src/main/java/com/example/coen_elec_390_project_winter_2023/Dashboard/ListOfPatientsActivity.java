@@ -17,8 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
+import com.example.coen_elec_390_project_winter_2023.Models.Doctor;
 import com.example.coen_elec_390_project_winter_2023.Models.Patient;
 import com.example.coen_elec_390_project_winter_2023.Models.User;
+import com.example.coen_elec_390_project_winter_2023.Models.userOptions;
 import com.example.coen_elec_390_project_winter_2023.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,12 +29,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListOfPatientsActivity extends AppCompatActivity {
     private ListView patientListView;
     private ArrayList<User> patientList = new ArrayList<>();
-    private ArrayList<String> patientListNames = new ArrayList<>();
-    private ArrayAdapter<String> patientAdapter;
+    private ArrayAdapter<User> patientAdapter;
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     @Override
@@ -42,54 +44,66 @@ public class ListOfPatientsActivity extends AppCompatActivity {
 
         patientListView = findViewById(R.id.patientListViewID);
 
-        CollectionReference usersRef = (FirebaseHelper.db()).collection("users"); // get a reference to the "users" collection
+        //Load all patients
+        Toast.makeText(ListOfPatientsActivity.this, "Please wait, while we load your patients...", Toast.LENGTH_SHORT).show();
 
-        usersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseHelper.getCurrentUser(new FirebaseHelper.getUserCallbackInterface() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String userId = document.getId(); // get the user ID
-                        String userType = document.getString("userType"); // get the value of the "userType" key\
-                        String name = document.getString("name");
-                        String email = document.getString("email");
-                        String password = document.getString("password");
-                        String uid = document.getString("uid");
+            public void onSuccess(User user) {
+                if (user.getUserType() == userOptions.userType.DOCTOR){
 
-                        Log.d("firebase", "The user type for user " + userId + " is: " + userType);
-                        // if user is a patient, add their name to the patientList
-                        if (userType.equals("PATIENT")  && name != null && email != null && password != null && uid != null) {
-                            patientListNames.add(document.getString("name").toString());
-                            //create a new user object and add it to the patientList
-                            User user = new Patient(name, email, password, uid);
-                            patientList.add(user);
-
-                        }
-                    }
-
-                    System.out.println(patientList);
-                    patientAdapter = new ArrayAdapter<String>(ListOfPatientsActivity.this, R.layout.patient_list_item, R.id.patientNameTextView, patientListNames) {
-                        @NonNull
+                    //Get all patients
+                    firebaseHelper.loadAllPatients(new FirebaseHelper.getUsersCallbackInterface() {
                         @Override
-                        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                            View view = super.getView(position, convertView, parent);
+                        public void onSuccess(List<User> users) {
+                            //Load doctor patients
+                            ArrayList<String> doctorPatientsList = (ArrayList<String>) ((Doctor) user).getPatientsList();
 
-                            ImageView patientImageView = view.findViewById(R.id.patientImageView);
-                            // Set the image resource for the ImageView
-                            patientImageView.setImageResource(R.drawable.user);
+                            //Load the doctor's patients data
+                            for(int i = 0; i < users.size(); i++){
+                                String patientUid = users.get(i).getUid();
+                                if(doctorPatientsList.contains(patientUid)){
+                                    patientList.add(users.get(i));
+                                }
+                            }
 
-                            TextView patientNameTextView = view.findViewById(R.id.patientNameTextView);
-                            // Set the text for the TextView
-                            patientNameTextView.setText(patientListNames.get(position));
+                            //Set Adapter
+                            patientAdapter = new ArrayAdapter<User>(ListOfPatientsActivity.this, R.layout.patient_list_item, R.id.patientNameTextView, patientList) {
+                                @NonNull
+                                @Override
+                                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
 
-                            return view;
+                                    ImageView patientImageView = view.findViewById(R.id.patientImageView);
+                                    // Set the image resource for the ImageView
+                                    patientImageView.setImageResource(R.drawable.user);
+
+                                    TextView patientNameTextView = view.findViewById(R.id.patientNameTextView);
+
+                                    // Set the text for the TextView
+                                    patientNameTextView.setText(patientList.get(position).getName());
+
+                                    return view;
+                                }
+                            };
+                            patientListView.setAdapter(patientAdapter);
                         }
-                    };
-                    patientListView.setAdapter(patientAdapter);
+
+                        @Override
+                        public void onFail(Exception e) {
+                            Toast.makeText(ListOfPatientsActivity.this, "Failed to load all patients", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
 
                 } else {
-                    Log.d("firebase", "Error getting user documents: " + task.getException());
+                    onFail(new Exception());
                 }
+            }
+            @Override
+            public void onFail(Exception e) {
+                Toast.makeText(ListOfPatientsActivity.this, "Failed to load your data", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 

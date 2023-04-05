@@ -158,29 +158,13 @@ public class MyDataActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_patient_dashboard, menu);
-        return true;
-    }
-
-    // this event will enable the back
-    // function to the button on press
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.patient_logout:
-                firebaseHelper.logout();
-                startActivity(new Intent(MyDataActivity.this, SplashActivity.class));
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public List<DataEntry> listToEntry(List<Integer> reading){
         List<DataEntry> data = new ArrayList<>();
+
+        if(reading == null){
+            return data;
+        }
+
         for(int i=0;i<reading.size();i++){
             data.add(new ValueDataEntry((i*100), reading.get(i)));
         }
@@ -260,6 +244,14 @@ public class MyDataActivity extends AppCompatActivity {
         firebaseHelper.getReadingsNotCurrentUser(userID, new FirebaseHelper.getReadingsListCallbackInterface() {
             @Override
             public void onSuccess(List<Reading> readingsList) {
+
+                if(readingsList == null){
+                    Toast.makeText(MyDataActivity.this, "No data found for this period.", Toast.LENGTH_SHORT).show();
+                    flexedValuesData.clear();
+                    restedValuesData.clear();
+                    return;
+                }
+
                 // Sort the readings by date
                 Collections.sort(readingsList, new Comparator<Reading>() {
                     public int compare(Reading o1, Reading o2) {
