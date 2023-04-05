@@ -143,6 +143,9 @@ public class PatientDashboard extends AppCompatActivity {
                 startActivity(new Intent(PatientDashboard.this, HomeActivity.class));
                 finish();
                 return true;
+            case R.id.appointments:
+                startActivity(new Intent(PatientDashboard.this, PatientAppointments.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

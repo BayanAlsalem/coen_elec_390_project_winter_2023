@@ -1,5 +1,6 @@
 package com.example.coen_elec_390_project_winter_2023.Dashboard;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -63,8 +65,14 @@ public class MyDataActivity extends AppCompatActivity {
     //button variables
     Button button;
 
+    String doctorName;
+    EditText patientName;
+    EditText appointmentReason;
+    String patientString;
+
 
     public static boolean hasData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +82,17 @@ public class MyDataActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spinnerId);
         button = findViewById(R.id.request_appointmentId);
 
+
+
         line = AnyChart.line();
         anyChartView.setChart(line);
         //
 
         //get intent from previous activity
         String userID = getIntent().getStringExtra("patientId");
+        patientString = getIntent().getStringExtra("patientName");
         System.out.println(userID);
+
 
         // if user is a patient, hide the request appointment button
         firebaseHelper.getCurrentUser(new FirebaseHelper.getUserCallbackInterface() {
@@ -91,6 +103,7 @@ public class MyDataActivity extends AppCompatActivity {
 
                 } else if (user.getUserType() == userOptions.userType.DOCTOR) {
                     button.setVisibility(View.VISIBLE);
+                    doctorName=user.getName();
 
                 }
             }
@@ -102,6 +115,19 @@ public class MyDataActivity extends AppCompatActivity {
         });
 
         checkData();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyDataActivity.this,RequestAppointmentActivity.class);
+                intent.putExtra("patientID",userID);
+                intent.putExtra("doctorName",doctorName);
+                intent.putExtra("patientName",patientString);
+                startActivity(intent);
+
+
+            }
+        });;
 
     }//end of onCreate() function
 
