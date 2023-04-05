@@ -39,7 +39,8 @@ public class PatientRestTest extends BluetoothReadingsActivity {
     List<Integer> restReadings;
 
     private SemiCircleProgressBar semiCircleProgressBar;
-
+    Button restartButton;
+    BluetoothAsyncTask bluetoothAsyncTask;
 
     boolean ready= false;
     @Override
@@ -77,9 +78,15 @@ public class PatientRestTest extends BluetoothReadingsActivity {
         Start_test = findViewById(R.id.btn_StartRest);
         Redo = findViewById(R.id.btn_redo);
         next_test = findViewById(R.id.btn_Contracting);
+        restartButton = findViewById(R.id.restartButton);
 
         progressBar.setProgress(0);
         semiCircleProgressBar.setProgress(0);
+
+        restartButton.setOnClickListener(view -> {
+            restartButton.setVisibility(View.GONE);
+            startBluetoothTask();
+        });
 
         Start_test.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,11 +149,22 @@ public class PatientRestTest extends BluetoothReadingsActivity {
         //updateCountDownText();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Cancel the Bluetooth task and the timeout, and show the restart button here
+        if(bluetoothAsyncTask!=null && restReadings==null) {
+            bluetoothAsyncTask.cancel(true);
+            bluetoothAsyncTask.cancelTimeout();
+            restartButton.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void startBluetoothTask() {
         // Assuming you have the Bluetooth device address
         String deviceAddress = selectedDevice.getAddress(); // Replace with the actual Bluetooth device address
 
-        BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar,semiCircleProgressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
+        bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar,semiCircleProgressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
 
             @Override
             public void onReadingsReceived(List<Integer> readings) {
@@ -161,7 +179,7 @@ public class PatientRestTest extends BluetoothReadingsActivity {
                     }
                 }
             }
-        });
+        },this);
         bluetoothAsyncTask.execute();
     }
 

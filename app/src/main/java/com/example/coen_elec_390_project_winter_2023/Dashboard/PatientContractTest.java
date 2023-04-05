@@ -43,8 +43,9 @@ public class PatientContractTest extends BluetoothReadingsActivity{
 
     List<Integer> flexedReading;
     private SemiCircleProgressBar semiCircleProgressBar;
+    BluetoothAsyncTask bluetoothAsyncTask;
 
-
+    Button restartButton;
     boolean ready= false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,15 @@ public class PatientContractTest extends BluetoothReadingsActivity{
         Redo2 = findViewById(R.id.btn_redo2);
         end_test = findViewById(R.id.btn_end);
         semiCircleProgressBar = findViewById(R.id.semiCircleProgressBarFlexed);
+
+        restartButton = findViewById(R.id.restartButton);
+
+        restartButton.setOnClickListener(view -> {
+            restartButton.setVisibility(View.GONE);
+            startBluetoothTask();
+        });
+
+
         //CountdownContract = findViewById(R.id.text_view_countdown2);
         semiCircleProgressBar.setProgress(0);
         progressBar.setProgress(0);
@@ -153,6 +163,22 @@ public class PatientContractTest extends BluetoothReadingsActivity{
         //updateCountDownText();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        System.out.println("TRASHHHHHH TESTTT");
+        // Cancel the Bluetooth task and the timeout, and show the restart button here
+        if(bluetoothAsyncTask!=null) {
+            System.out.println("ONSTOPPPPPP RANNNNN IFFF2222111414141222222");
+
+                System.out.println("ONSTOPPPPPP RANNNNN IFFF");
+                bluetoothAsyncTask.cancel(true);
+                bluetoothAsyncTask.cancelTimeout();
+                restartButton.setVisibility(View.VISIBLE);
+        }
+    }
+
 /*    private void updateCountDownText() {
         int minutes = (int) (timeLeft / 1000) / 60;
         int seconds = (int) (timeLeft / 1000) % 60;
@@ -165,7 +191,7 @@ private void startBluetoothTask() {
     // Assuming you have the Bluetooth device address
     String deviceAddress = selectedDevice.getAddress(); // Replace with the actual Bluetooth device address
 
-    BluetoothAsyncTask bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar,semiCircleProgressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
+    bluetoothAsyncTask = new BluetoothAsyncTask(deviceAddress, new Handler(Looper.getMainLooper()), progressBar,semiCircleProgressBar, new BluetoothAsyncTask.OnReadingsReceivedListener() {
 
         @Override
         public void onReadingsReceived(List<Integer> readings) {
@@ -192,7 +218,7 @@ private void startBluetoothTask() {
                 }
             }
         }
-    });
+    }, this);
     bluetoothAsyncTask.execute();
 }
 

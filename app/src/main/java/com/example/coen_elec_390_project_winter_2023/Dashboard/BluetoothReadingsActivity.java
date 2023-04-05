@@ -128,7 +128,8 @@ public class BluetoothReadingsActivity extends AppCompatActivity {
 
     }
 
-    public void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
         try {
             btSocket.close();
