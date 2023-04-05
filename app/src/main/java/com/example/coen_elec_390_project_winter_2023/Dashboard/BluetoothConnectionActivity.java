@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coen_elec_390_project_winter_2023.Controller.FirebaseHelper;
 import com.example.coen_elec_390_project_winter_2023.R;
 
 import org.w3c.dom.Text;
@@ -53,8 +54,9 @@ public class BluetoothConnectionActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             userID=getIntent().getStringExtra("userID");
         }else{
+            FirebaseHelper firebaseHelper = new FirebaseHelper();
+            userID = firebaseHelper.getCurrentUserId();
             System.out.println("Intent Failed");
-            return;
         }
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         deviceList = (ListView) findViewById(R.id.deviceList);
