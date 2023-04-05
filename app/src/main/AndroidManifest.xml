@@ -136,7 +136,7 @@
         </activity>
 
         <activity
-            android:parentActivityName=".Dashboard.HomeActivity"
+            android:parentActivityName=".Dashboard.ListOfPatientsActivity"
             android:name=".Dashboard.MyDataActivity"
             android:screenOrientation="landscape" >
         </activity>

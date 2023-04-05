@@ -82,7 +82,7 @@ public class DoctorDashboard extends AppCompatActivity {
 
 
         // Set click listeners for requestAppointment
-        TextView requestAppointmentText = findViewById(R.id.requestAppointmentTextID);
+        /*TextView requestAppointmentText = findViewById(R.id.requestAppointmentTextID);
         ImageView requestAppointmentImage = findViewById(R.id.requestAppointmentImageID);
         requestAppointmentText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class DoctorDashboard extends AppCompatActivity {
                 Intent intent = new Intent(DoctorDashboard.this, RequestAppointmentActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
 

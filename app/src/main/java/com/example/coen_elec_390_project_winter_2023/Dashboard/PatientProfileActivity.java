@@ -39,7 +39,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         patientAgeEditText = findViewById(R.id.patientAgeID);
         cityEditText = findViewById(R.id.cityPatientProfileID);
         countryEditText = findViewById(R.id.countryPatientProfileID);
-        doctorNameEditText = findViewById(R.id.doctorNameID);
+        //doctorNameEditText = findViewById(R.id.doctorNameID);
         editButton = findViewById(R.id.editBtnPatientID);
         saveButton = findViewById(R.id.saveBtnPatientID);
 
@@ -48,7 +48,7 @@ public class PatientProfileActivity extends AppCompatActivity {
         patientAgeEditText.setEnabled(false);
         cityEditText.setEnabled(false);
         countryEditText.setEnabled(false);
-        doctorNameEditText.setEnabled(false);
+        //doctorNameEditText.setEnabled(false);
 
         firebaseHelper.getCurrentUser(new FirebaseHelper.getUserCallbackInterface() {
             @Override
@@ -59,7 +59,7 @@ public class PatientProfileActivity extends AppCompatActivity {
                 patientAgeEditText.setText(patient.getAge());
                 cityEditText.setText(patient.getCity());
                 countryEditText.setText(patient.getCountry());
-                doctorNameEditText.setText(patient.getDoctorName());
+                //doctorNameEditText.setText(patient.getDoctorName());
 
             }
 
@@ -79,7 +79,7 @@ public class PatientProfileActivity extends AppCompatActivity {
                 patientAgeEditText.setEnabled(true);
                 cityEditText.setEnabled(true);
                 countryEditText.setEnabled(true);
-                doctorNameEditText.setEnabled(true);
+                //doctorNameEditText.setEnabled(true);
 
                 // Show the Save button and hide the Edit button
                 saveButton.setVisibility(View.VISIBLE);
@@ -96,9 +96,9 @@ public class PatientProfileActivity extends AppCompatActivity {
                 String age = patientAgeEditText.getText().toString();
                 String city = cityEditText.getText().toString();
                 String country = countryEditText.getText().toString();
-                String doctorName = doctorNameEditText.getText().toString();
+                //String doctorName = doctorNameEditText.getText().toString();
 
-                if(fullName.isEmpty() || age.isEmpty() || city.isEmpty() || country.isEmpty() || doctorName.isEmpty()) {
+                if(fullName.isEmpty() || age.isEmpty() || city.isEmpty() || country.isEmpty()) {
                     Toast.makeText(PatientProfileActivity.this, "Please fill out the fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -108,13 +108,13 @@ public class PatientProfileActivity extends AppCompatActivity {
                 patientAgeEditText.setEnabled(false);
                 cityEditText.setEnabled(false);
                 countryEditText.setEnabled(false);
-                doctorNameEditText.setEnabled(false);
+                //doctorNameEditText.setEnabled(false);
 
                 // Show the Edit button and hide the Save button
                 saveButton.setVisibility(View.GONE);
                 editButton.setVisibility(View.VISIBLE);
 
-                firebaseHelper.updatePatientInfo(fullName, age, city, country, doctorName, new FirebaseHelper.voidCallbackInterface() {
+                firebaseHelper.updatePatientInfo(fullName, age, city, country, null, new FirebaseHelper.voidCallbackInterface() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(PatientProfileActivity.this, "Info saved successfully", Toast.LENGTH_SHORT).show();

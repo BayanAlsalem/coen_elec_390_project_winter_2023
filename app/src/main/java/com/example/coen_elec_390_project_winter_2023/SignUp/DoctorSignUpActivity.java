@@ -56,7 +56,7 @@ public class DoctorSignUpActivity extends AppCompatActivity {
                 } else{
                     //Firebase integration to create a user
                     List<String> patientsList = new ArrayList<>(); //Empty patients list
-                    Doctor doctor = new Doctor(name, hospital,user, pass, null, patientsList);
+                    Doctor doctor = new Doctor(name, hospital, user, pass, null, patientsList);
                     firebaseHelper.createUser(doctor, new FirebaseHelper.voidCallbackInterface() {
                         @Override
                         public void onSuccess() {

@@ -20,7 +20,7 @@ public class PatientSignUpActivity extends AppCompatActivity {
     //This class integrates Firebase Authentication service and signs up a user
     FirebaseHelper firebaseHelper = new FirebaseHelper();
 
-    private EditText patientEmailSignUp, patientPasswordSignup, patientFullName;
+    private EditText patientEmailSignUp, patientPasswordSignup, patientFullName, patientAge;
     private Button signupBtnFromPatientSignupLayout;
     private TextView patientLoginRedirectText;
 
@@ -31,6 +31,7 @@ public class PatientSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_signup_layout);
 
+        patientAge = findViewById(R.id.patientAgeID);
         patientFullName = findViewById(R.id.patientFullNameID);
         patientEmailSignUp = findViewById(R.id.patientEmailSignUpID);
         patientPasswordSignup = findViewById(R.id.patientPasswordSignupID);
@@ -55,6 +56,7 @@ public class PatientSignUpActivity extends AppCompatActivity {
                 } else {
                     //Firebase integration to create a user
                     Patient patient = new Patient(name, user, pass, null);
+                    patient.setAge(patientAge.getText().toString().trim());
                     firebaseHelper.createUser(patient, new FirebaseHelper.voidCallbackInterface() {
                         @Override
                         public void onSuccess() {

@@ -54,7 +54,6 @@ public class DoctorProfileActivity extends AppCompatActivity {
                 hospitalNameEditText.setText(doctor.getHospital());
                 ageEditText.setText(doctor.getAge());
                 experienceEditText.setText(doctor.getExperience());
-
             }
 
             @Override
