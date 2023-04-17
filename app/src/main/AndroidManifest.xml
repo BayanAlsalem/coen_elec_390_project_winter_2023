@@ -17,12 +17,16 @@
         android:theme="@style/Theme.Coen_elec_390_project_winter_2023"
         tools:replace="android:label"
         tools:targetApi="33">
-
+        <activity
+            android:name=".Dashboard.PatientAppointments"
+            android:exported="false"
+            android:parentActivityName=".Dashboard.SplashActivity"/>
         <activity
             android:name=".Dashboard.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -30,119 +34,71 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".Dashboard.BluetoothConnectionActivity"
-            android:parentActivityName=".Dashboard.SplashActivity">
-        </activity>
-
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
             android:name=".Dashboard.BluetoothReadingsActivity"
             android:exported="false"
-            android:parentActivityName=".Dashboard.SplashActivity">
-        </activity>
-
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.DoctorDashboard">
-        </activity>
-
-
+            android:name=".Dashboard.DoctorDashboard"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.DoctorProfileActivity">
-        </activity>
-
+            android:name=".Dashboard.DoctorProfileActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.DoctorAddPatient">
-        </activity>
-
+            android:name=".Dashboard.DoctorAddPatient"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.ListOfPatientsActivity">
-        </activity>
-
-
+            android:name=".Dashboard.ListOfPatientsActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Login.LoginActivity">
-        </activity>
-
-
+            android:name=".Login.LoginActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".SignUp.PatientSignUpActivity">
-        </activity>
-
+            android:name=".SignUp.PatientSignUpActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".SignUp.SignUpOptionsActivity">
-        </activity>
-
+            android:name=".SignUp.SignUpOptionsActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".SignUp.DoctorSignUpActivity">
-        </activity>
-
+            android:name=".SignUp.DoctorSignUpActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
             android:name=".Dashboard.PatientContractTest"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-
+            android:parentActivityName=".Dashboard.PatientDashboard"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.PatientDashboard">
-        </activity>
-
+            android:name=".Dashboard.PatientDashboard"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.ResultsActivity">
-        </activity>
-
+            android:name=".Dashboard.ResultsActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
             android:name=".Dashboard.PatientInstructionsActivity"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-
+            android:parentActivityName=".Dashboard.PatientDashboard"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.PatientProfileActivity">
-        </activity>
-
+            android:name=".Dashboard.PatientProfileActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
             android:name=".Dashboard.PatientRestTest"
-            android:parentActivityName=".Dashboard.PatientDashboard" >
-        </activity>
-
+            android:parentActivityName=".Dashboard.PatientDashboard"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.PrivacyActivity">
-        </activity>
-
+            android:name=".Dashboard.PrivacyActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.SplashActivity"
-            android:name=".Dashboard.RequestAppointmentActivity">
-        </activity>
-
+            android:name=".Dashboard.RequestAppointmentActivity"
+            android:parentActivityName=".Dashboard.SplashActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.HomeActivity"
-            android:name=".Dashboard.SplashActivity">
-        </activity>
-
+            android:name=".Dashboard.SplashActivity"
+            android:parentActivityName=".Dashboard.HomeActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.HomeActivity"
-            android:name=".Dashboard.BluetoothAsyncTask">
-        </activity>
-
+            android:name=".Dashboard.BluetoothAsyncTask"
+            android:parentActivityName=".Dashboard.HomeActivity"></activity>
         <activity
-            android:parentActivityName=".Dashboard.ListOfPatientsActivity"
             android:name=".Dashboard.MyDataActivity"
-            android:screenOrientation="landscape" >
-        </activity>
-
-
-
+            android:parentActivityName=".Dashboard.ListOfPatientsActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

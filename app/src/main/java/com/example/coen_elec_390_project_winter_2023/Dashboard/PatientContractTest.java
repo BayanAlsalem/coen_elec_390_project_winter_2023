@@ -200,7 +200,7 @@ private void startBluetoothTask() {
                 Log.d("MainActivity", "Readings: " + readings.toString());
                 flexedReading=readings;
                 if(readings.size()!=0) {
-                    firebaseHelper.createReading(readings,restReadings,  new FirebaseHelper.voidCallbackInterface() {
+                    /*firebaseHelper.createReading(readings,restReadings,  new FirebaseHelper.voidCallbackInterface() {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(PatientContractTest.this, "Readings Created Successfully", Toast.LENGTH_SHORT).show();
@@ -209,7 +209,7 @@ private void startBluetoothTask() {
                         public void onFail(Exception e) {
                             Toast.makeText(PatientContractTest.this, "Reading Creation Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }, userID);
+                    }, userID);*/
                     ready=true;
                     end_test.setVisibility(View.VISIBLE);
                 }else{
